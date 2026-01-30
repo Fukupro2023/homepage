@@ -9,7 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.15"
+    "@iconify-json/ri": "^1.2.8",
+    "astro": "^5.16.15",
+    "astro-icon": "^1.1.5"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
