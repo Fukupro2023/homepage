@@ -1,4 +1,7 @@
 ---
+import Header from "@/components/layout/Header.astro";
+import "@/styles/global.css";
+
 const props = Astro.props;
 const title = props.title || "福プロ | 福山大学学友会プログラミングサークル";
 ---
@@ -14,6 +17,7 @@ const title = props.title || "福プロ | 福山大学学友会プログラミ�
 		<title>{title}</title>
 	</head>
 	<body>
+		<Header />
 		<slot />
 	</body>
 </html>
