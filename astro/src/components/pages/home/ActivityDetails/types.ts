@@ -1,5 +1,5 @@
 export type ActivityDetail = {
-  title: string;
-  description: string;
-  image: ImageMetadata;
+	title: string;
+	description: string;
+	image: ImageMetadata;
 };

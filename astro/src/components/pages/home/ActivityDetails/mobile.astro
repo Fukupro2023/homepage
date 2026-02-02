@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import type { ActivityDetail } from "./types";
-import ActivityHeading from "./ActivityHeading.astro";
 import MarkdownContainer from "@/components/ui/MarkdownContainer/index.astro";
+import ActivityHeading from "./ActivityHeading.astro";
+import type { ActivityDetail } from "./types";
 
 const props = Astro.props;
 const activityDetails = props.activityDetails;
-
 ---
 
 <div class="sm:hidden block py-6">

@@ -4,5 +4,5 @@ export const PATH = {
 	FAQ: "/faq/",
 	BLOG: {
 		GROUP_ACTIVITIES: "/blogs/group-activities/",
-	}
+	},
 };
