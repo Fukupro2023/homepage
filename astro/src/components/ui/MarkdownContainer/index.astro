@@ -1,9 +1,13 @@
 ---
 import { marked } from "marked";
 
-const props = Astro.props;
-const markdown = props.markdown;
-const className = props.className;
+type Props = {
+	markdown: string;
+	className?: string;
+};
+
+const props: Props = Astro.props;
+const { markdown, className } = props;
 
 const parsedMarkdown = marked.parse(markdown);
 ---
