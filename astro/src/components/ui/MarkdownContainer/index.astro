@@ -1,0 +1,15 @@
+---
+import { marked } from "marked";
+
+const props = Astro.props;
+const markdown = props.markdown;
+
+const parsedMarkdown = marked.parse(markdown);
+---
+<div class="markdown-container" set:html={parsedMarkdown} />
+
+<style>
+  .markdown-container {
+    @apply text-gray-800;
+  }
+</style>
