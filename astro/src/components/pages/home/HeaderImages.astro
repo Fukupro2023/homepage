@@ -28,14 +28,28 @@ const images = Object.entries(imageModules)
 <script>
   import Splide from "@splidejs/splide";
 
-  new Splide(".header-images-splide", {
-    type: "loop",
-    autoplay: true,
-    interval: 10000,
-    arrows: false,
-    pagination: false,
-    drag: true ,
-    keyboard: true ,
-    wheel: false,
-  }).mount();
+  const selector = ".header-images-splide";
+  const elements = document.querySelectorAll(selector);
+
+  elements.forEach((el) => {
+    if (!(el instanceof HTMLElement)) return;
+
+    // 既にこの要素に対して Splide を初期化している場合はスキップ
+    if (el.dataset.splideInitialized === "true") {
+      return;
+    }
+
+    el.dataset.splideInitialized = "true";
+
+    new Splide(el, {
+      type: "loop",
+      autoplay: true,
+      interval: 10000,
+      arrows: false,
+      pagination: false,
+      drag: true,
+      keyboard: true,
+      wheel: false,
+    }).mount();
+  });
 </script>
