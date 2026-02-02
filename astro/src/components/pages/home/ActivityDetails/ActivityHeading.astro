@@ -1,6 +1,10 @@
 ---
-const props = Astro.props;
-const title = props.title;
+type Props = {
+	title: string;
+};
+
+const props: Props = Astro.props;
+const { title } = props;
 ---
 
 <h3>{title}</h3>

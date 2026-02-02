@@ -2,14 +2,17 @@
 import { Image } from "astro:assets";
 import MarkdownContainer from "@/components/ui/MarkdownContainer/index.astro";
 import ActivityHeading from "./ActivityHeading.astro";
-import type { ActivityDetail } from "./types";
+import type { ActivityDetail } from "./types.ts";
 
-const props = Astro.props;
-const activityDetails = props.activityDetails;
+type Props = {
+	activityDetails: ActivityDetail[];
+};
+const props: Props = Astro.props;
+const { activityDetails } = props;
 ---
 
 <div class="sm:block hidden space-y-4 py-6">
-  {activityDetails.map((activity: ActivityDetail) => (
+  {activityDetails.map((activity) => (
     <div class="activity-detail">
       <div>
         <ActivityHeading title={activity.title} />

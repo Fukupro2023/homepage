@@ -2,17 +2,20 @@
 import { Image } from "astro:assets";
 import MarkdownContainer from "@/components/ui/MarkdownContainer/index.astro";
 import ActivityHeading from "./ActivityHeading.astro";
-import type { ActivityDetail } from "./types";
+import type { ActivityDetail } from "./types.ts";
 
-const props = Astro.props;
-const activityDetails = props.activityDetails;
+type Props = {
+	activityDetails: ActivityDetail[];
+};
+const props: Props = Astro.props;
+const { activityDetails } = props;
 ---
 
 <div class="sm:hidden block py-6">
   <div class="activity-detail-splide splide" role="group" aria-label="活動詳細スライダー">
     <div class="splide__track">
       <ul class="splide__list mx-4">
-        {activityDetails.map((activity: ActivityDetail) => (
+        {activityDetails.map((activity) => (
           <li class="splide__slide">
             <div class="activity-detail">
               <ActivityHeading title={activity.title} />

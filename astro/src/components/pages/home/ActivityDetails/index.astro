@@ -7,8 +7,9 @@ import Heading from "@/components/ui/Heading/index.astro";
 import { PATH } from "@/constants";
 import MobileActivityDetails from "./mobile.astro";
 import PCActivityDetails from "./pc.astro";
+import type { ActivityDetail } from "./types";
 
-const activityDetails = [
+const activityDetails: ActivityDetail[] = [
 	{
 		title: "班活動",
 		description: `アプリ班・競プロ班・ゲーム班・XR班の４つの班で活動しています。\n\n班長を中心にそれぞれ活動しています。\n詳しくは[こちら](${PATH.BLOG.GROUP_ACTIVITIES})をご覧ください。`,
