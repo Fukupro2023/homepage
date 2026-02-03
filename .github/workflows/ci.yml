@@ -181,6 +181,8 @@ jobs:
     defaults:
       run:
         working-directory: astro
+    env:
+      BACKEND_URL: http://localhost:3000
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
