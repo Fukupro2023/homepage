@@ -33,11 +33,48 @@ export function parseQuery(q: string): {
 	return result;
 }
 
+/** APIレスポンスの型定義 */
+export type SearchApiResponse = {
+	posts: Array<{
+		id: number | string;
+		title: string;
+		author: string;
+		published_at: string;
+		header_image_url: string | null;
+		description?: string;
+		tags: string[];
+	}>;
+	pagination: {
+		total: number;
+		page: number;
+		per_page: number;
+		total_pages: number;
+	};
+};
+
 export type FetchBlogsResult = {
 	blogs: BlogItem[];
 	totalPages: number;
 	currentPage: number;
 };
+
+/** APIレスポンスをBlogItemに変換 */
+function transformApiResponseToBlogItem(
+	post: SearchApiResponse["posts"][0],
+	basePath: string = "/blogs",
+): BlogItem {
+	return {
+		id: String(post.id),
+		title: post.title,
+		content: post.description || "",
+		description: post.description,
+		author: post.author,
+		link: `${basePath}/${post.id}/`,
+		thumbnail: post.header_image_url ?? undefined,
+		published_at: post.published_at,
+		tags: post.tags,
+	};
+}
 
 function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 	const { q, limit = 10, page = 1 } = params;
@@ -49,7 +86,7 @@ function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 
 		if (tag) {
 			filtered = filtered.filter((b) =>
-				b.tags.some((t) => t.name.toLowerCase() === tag.toLowerCase()),
+				b.tags.some((t) => t.toLowerCase() === tag.toLowerCase()),
 			);
 		}
 		if (author) {
@@ -61,7 +98,9 @@ function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 			const k = kw.toLowerCase();
 			filtered = filtered.filter(
 				(b) =>
-					b.title.toLowerCase().includes(k) || b.content.toLowerCase().includes(k),
+					b.title.toLowerCase().includes(k) ||
+					b.content.toLowerCase().includes(k) ||
+					b.description?.toLowerCase().includes(k),
 			);
 		}
 	}
@@ -88,8 +127,12 @@ async function fetchBlogsFromApi(params: FetchBlogsParams): Promise<FetchBlogsRe
 		throw new Error(`Blog search failed: ${res.status} ${res.statusText}`);
 	}
 
-	const data = (await res.json()) as FetchBlogsResult;
-	return data;
+	const data = (await res.json()) as SearchApiResponse;
+	const blogs = data.posts.map((post) => transformApiResponseToBlogItem(post));
+	const totalPages = data.pagination.total_pages;
+	const currentPage = data.pagination.page;
+
+	return { blogs, totalPages, currentPage };
 }
 
 /**

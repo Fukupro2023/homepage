@@ -4,12 +4,13 @@ export type BlogTag = {
 };
 
 export type BlogItem = {
-	id: number;
+	id: string;
 	title: string;
 	content: string;
+	description?: string;
 	author: string;
 	link: string;
 	thumbnail?: string;
 	published_at: string;
-	tags: BlogTag[];
+	tags: string[];
 };

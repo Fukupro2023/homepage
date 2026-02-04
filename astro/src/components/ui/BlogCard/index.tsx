@@ -28,12 +28,12 @@ export default function BlogCard({ blog }: Props) {
         <div className="mt-2 flex flex-wrap gap-2">
           {blog.tags.map((tag) => (
             <a
-              key={tag.id ?? tag.name}
-              href={`${PATH.BLOGS}?q=tag:${encodeURIComponent(tag.name)}`}
+              key={tag}
+              href={`${PATH.BLOGS}?q=tag:${encodeURIComponent(tag)}`}
               className="flex items-center"
             >
               <Icon icon="ri:hashtag" />
-              <span className="text-sm text-gray-500">{tag.name}</span>
+              <span className="text-sm text-gray-500">{tag}</span>
             </a>
           ))}
         </div>
