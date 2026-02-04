@@ -23,7 +23,7 @@ const { blog } = Astro.props as Props;
     </a>
     <div class="flex flex-wrap gap-2">
       {blog.tags.map((tag) => (
-        <a class="flex items-center" href={`${PATH.BLOGS}?tag=${encodeURIComponent(tag.name)}`}>
+        <a class="flex items-center" href={`${PATH.BLOGS}?q=tag:${encodeURIComponent(tag.name)}`}>
           <Icon name="ri:hashtag" />
           <span class="text-sm text-gray-500">{tag.name}</span>
         </a>

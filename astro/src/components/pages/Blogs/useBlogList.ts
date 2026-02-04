@@ -2,20 +2,29 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import useSWR from "swr";
 import { fetchBlogs, type FetchBlogsResult } from "@/hooks/fetchBlogs";
 
+/** 検索窓の空白を+に変換して q パラメータ用の文字列を生成 */
+function toQueryString(value: string): string {
+  return value.trim().replace(/\s+/g, "+");
+}
+
+/** URL の q パラメータを検索窓表示用に変換（+ → 空白） */
+function fromQueryString(q: string): string {
+  return q.replace(/\+/g, " ");
+}
+
 export function useBlogList() {
   const searchParams = new URLSearchParams(window.location.search);
   const initialQ = searchParams.get("q") ?? "";
-  const initialTag = searchParams.get("tag") ?? undefined;
   const initialPage = Number(searchParams.get("page") ?? "1");
 
   const [query, setQuery] = useState(initialQ);
-  const [inputValue, setInputValue] = useState(initialQ);
+  const [inputValue, setInputValue] = useState(fromQueryString(initialQ));
   const [page, setPage] = useState(initialPage);
-  const [tag] = useState(initialTag);
   const isFirstPageEffect = useRef(true);
 
   const handleSearchSubmit = () => {
-    setQuery(inputValue.trim());
+    const formatted = toQueryString(inputValue);
+    setQuery(formatted);
     setPage(1);
   };
 
@@ -28,12 +37,6 @@ export function useBlogList() {
       params.delete("q");
     }
 
-    if (tag) {
-      params.set("tag", tag);
-    } else {
-      params.delete("tag");
-    }
-
     params.set("page", String(page));
 
     const newSearch = params.toString();
@@ -42,7 +45,7 @@ export function useBlogList() {
     }`;
 
     window.history.replaceState(null, "", newUrl);
-  }, [query, tag, page]);
+  }, [query, page]);
 
   useEffect(() => {
     if (isFirstPageEffect.current) {
@@ -57,8 +60,8 @@ export function useBlogList() {
   }, [page]);
 
   const { data, error, isLoading } = useSWR<FetchBlogsResult>(
-    `/api/blogs?q=${query}&tag=${tag ?? ""}&page=${page}&limit=9`,
-    () => fetchBlogs({ q: query || undefined, tag, page, limit: 9 })
+    `/api/blogs?q=${encodeURIComponent(query)}&page=${page}&limit=9`,
+    () => fetchBlogs({ q: query || undefined, page, limit: 9 })
   );
 
   return {

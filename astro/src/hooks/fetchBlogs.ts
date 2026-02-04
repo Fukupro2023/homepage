@@ -3,11 +3,35 @@ import { MOCK_BLOGS } from "@/constants";
 import type { BlogItem } from "@/types";
 
 export type FetchBlogsParams = {
+	/** 検索クエリ（例: tag:JavaScript+使い方+author:山田太郎、空白は+に変換） */
 	q?: string;
-	tag?: string;
 	limit?: number;
 	page?: number;
 };
+
+/** q パラメータをパースして tag / author / キーワードを抽出 */
+export function parseQuery(q: string): {
+	tag?: string;
+	author?: string;
+	keywords: string[];
+} {
+	const parts = q.split("+").filter(Boolean);
+	const result: { tag?: string; author?: string; keywords: string[] } = {
+		keywords: [],
+	};
+
+	for (const part of parts) {
+		if (part.startsWith("tag:")) {
+			result.tag = part.slice(4).trim();
+		} else if (part.startsWith("author:")) {
+			result.author = part.slice(7).trim();
+		} else if (part.trim()) {
+			result.keywords.push(part.trim());
+		}
+	}
+
+	return result;
+}
 
 export type FetchBlogsResult = {
 	blogs: BlogItem[];
@@ -16,20 +40,30 @@ export type FetchBlogsResult = {
 };
 
 function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
-	const { q, tag, limit = 10, page = 1 } = params;
+	const { q, limit = 10, page = 1 } = params;
 
 	let filtered = [...MOCK_BLOGS];
 
 	if (q) {
-		const k = q.toLowerCase();
-		filtered = filtered.filter(
-			(b) => b.title.toLowerCase().includes(k) || b.content.toLowerCase().includes(k),
-		);
-	}
-	if (tag) {
-		filtered = filtered.filter((b) =>
-			b.tags.some((t) => t.name.toLowerCase() === tag.toLowerCase()),
-		);
+		const { tag, author, keywords } = parseQuery(q);
+
+		if (tag) {
+			filtered = filtered.filter((b) =>
+				b.tags.some((t) => t.name.toLowerCase() === tag.toLowerCase()),
+			);
+		}
+		if (author) {
+			filtered = filtered.filter(
+				(b) => b.author.toLowerCase().includes(author.toLowerCase()),
+			);
+		}
+		for (const kw of keywords) {
+			const k = kw.toLowerCase();
+			filtered = filtered.filter(
+				(b) =>
+					b.title.toLowerCase().includes(k) || b.content.toLowerCase().includes(k),
+			);
+		}
 	}
 
 	const safePage = Math.max(1, page);
@@ -40,11 +74,10 @@ function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 }
 
 async function fetchBlogsFromApi(params: FetchBlogsParams): Promise<FetchBlogsResult> {
-	const { q, tag, limit = 10, page = 1 } = params;
+	const { q, limit = 10, page = 1 } = params;
 	const searchParams = new URLSearchParams();
 
 	if (q) searchParams.set("q", q);
-	if (tag) searchParams.set("tag", tag);
 	searchParams.set("limit", String(limit));
 	searchParams.set("page", String(page));
 

@@ -29,7 +29,7 @@ export default function BlogCard({ blog }: Props) {
           {blog.tags.map((tag) => (
             <a
               key={tag.id ?? tag.name}
-              href={`${PATH.BLOGS}?tag=${encodeURIComponent(tag.name)}`}
+              href={`${PATH.BLOGS}?q=tag:${encodeURIComponent(tag.name)}`}
               className="flex items-center"
             >
               <Icon icon="ri:hashtag" />
