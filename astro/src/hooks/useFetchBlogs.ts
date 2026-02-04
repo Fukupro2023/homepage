@@ -11,6 +11,8 @@ export type FetchBlogsParams = {
 
 export type FetchBlogsResult = {
 	blogs: BlogItem[];
+	totalPages: number;
+	currentPage: number;
 };
 
 function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
@@ -34,7 +36,7 @@ function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 	const start = (safePage - 1) * limit;
 	const blogs = filtered.slice(start, start + limit);
 
-	return { blogs };
+	return { blogs, totalPages: Math.ceil(filtered.length / limit), currentPage: safePage };
 }
 
 async function fetchBlogsFromApi(params: FetchBlogsParams): Promise<FetchBlogsResult> {
