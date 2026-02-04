@@ -6,4 +6,5 @@ export const PATH = {
 		GROUP_ACTIVITIES: "/blogs/group-activities/",
 	},
 	SEARCH: `${import.meta.env.BACKEND_URL}/api/v1/blogs/search`,
+	TAGS: `${import.meta.env.BACKEND_URL}/api/v1/blogs/tags`,
 };
