@@ -1,0 +1,39 @@
+---
+import Thumbnail from "./Thumbnail.astro";
+import dayjs from "dayjs";
+import Tags from "@/components/ui/Tags/index.astro";
+import type { BlogItem } from "@/types";
+
+type Props = {
+  blog: BlogItem;
+};
+
+const { blog } = Astro.props as Props;
+---
+
+<div class="blog-card">
+  <Thumbnail src={blog.thumbnail} title={blog.title} />
+  <div>
+    <p class="text-sm text-gray-500">
+      {dayjs(blog.published_at).format("YYYY-MM-DD")}
+    </p>
+    <a href={blog.link} target="_blank" rel="noopener noreferrer">
+      <h3>{blog.title}</h3>
+    </a>
+    <Tags tags={blog.tags} />
+  </div>
+</div>
+
+<style>
+  .blog-card {
+    @apply bg-white p-4 rounded-md sm:block flex justify-between flex-row-reverse border shadow-md;
+  
+    h3 {
+      @apply text-lg text-gray-800 font-bold line-clamp-3;
+
+      &:hover {
+        @apply underline;
+      }
+    }
+  }
+</style>
