@@ -1,0 +1,10 @@
+---
+import Container from "@/components/ui/Container/index.astro";
+import Heading from "@/components/ui/Heading/index.astro";
+import BlogContent from "./BlogContent";
+---
+
+<Container>
+  <Heading as="h1">記事一覧</Heading>
+  <BlogContent client:only="preact" />
+</Container>

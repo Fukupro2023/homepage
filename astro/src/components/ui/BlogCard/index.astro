@@ -1,0 +1,47 @@
+---
+import { Icon } from "astro-icon/components";
+import dayjs from "dayjs";
+import { PATH } from "@/constants";
+import type { BlogItem } from "@/types";
+import Thumbnail from "./Thumbnail.astro";
+
+type Props = {
+	blog: BlogItem;
+};
+
+const { blog } = Astro.props as Props;
+---
+
+<div class="blog-card">
+  <Thumbnail src={blog.thumbnail} title={blog.title} />
+  <div>
+    <p class="text-sm text-gray-500">
+      {dayjs(blog.published_at).format("YYYY-MM-DD")}
+    </p>
+    <a href={blog.link} target="_blank" rel="noopener noreferrer">
+      <h3>{blog.title}</h3>
+    </a>
+    <div class="flex flex-wrap gap-2">
+      {blog.tags.map((tag) => (
+        <a class="flex items-center" href={`${PATH.BLOGS}?q=tag:${encodeURIComponent(tag)}`}>
+          <Icon name="ri:hashtag" />
+          <span class="text-sm text-gray-500">{tag}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .blog-card {
+    @apply bg-white p-4 rounded-md md:block flex justify-between flex-row-reverse border shadow-md;
+  
+    h3 {
+      @apply text-lg text-gray-800 font-bold line-clamp-3;
+
+      &:hover {
+        @apply underline;
+      }
+    }
+  }
+</style>
