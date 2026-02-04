@@ -147,8 +147,13 @@ export async function fetchBlogs(params: FetchBlogsParams = {}): Promise<FetchBl
 		}
 
 		return await fetchBlogsFromApi(params);
-	} catch (_error) {
-		return getMockBlogs(params);
+	} catch (error) {
+		if (isDev || isTest) {
+			return getMockBlogs(params);
+		}
+		// biome-ignore lint: まだ検索APIができていないためエラーを出力
+		console.error(error);
+		return { blogs: [], totalPages: 0, currentPage: 1 };
 	}
 }
 
