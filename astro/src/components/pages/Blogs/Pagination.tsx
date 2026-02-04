@@ -23,7 +23,55 @@ export default function Pagination({
     }
   };
 
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = (() => {
+    // 5ページ以下なら全て表示
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    const items: (number | "ellipsis")[] = [];
+
+    const addPage = (page: number) => {
+      if (!items.includes(page)) {
+        items.push(page);
+      }
+    };
+
+    const addEllipsis = () => {
+      if (items[items.length - 1] !== "ellipsis") {
+        items.push("ellipsis");
+      }
+    };
+
+    const firstPage = 1;
+    const lastPage = totalPages;
+
+    // 先頭と末尾は常に表示
+    addPage(firstPage);
+
+    // 現在ページの前後を計算
+    const start = Math.max(currentPage - 1, 2);
+    const end = Math.min(currentPage + 1, totalPages - 1);
+
+    // 先頭との間にギャップがある場合は省略記号
+    if (start > 2) {
+      addEllipsis();
+    }
+
+    // 現在ページの前後を追加
+    for (let page = start; page <= end; page++) {
+      addPage(page);
+    }
+
+    // 末尾との間にギャップがある場合は省略記号
+    if (end < totalPages - 1) {
+      addEllipsis();
+    }
+
+    addPage(lastPage);
+
+    return items;
+  })();
 
   return (
     <nav
@@ -40,21 +88,27 @@ export default function Pagination({
       </button>
 
       <ul className="flex items-center gap-1">
-        {pages.map((pageNumber) => (
-          <li key={pageNumber}>
-            <button
-              type="button"
-              onClick={() => onChange(pageNumber)}
-              className={`px-3 py-1 text-sm rounded border ${
-                pageNumber === currentPage
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "border-gray-300 text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              {pageNumber}
-            </button>
-          </li>
-        ))}
+        {pages.map((item, index) =>
+          item === "ellipsis" ? (
+            <li key={`ellipsis-${index}`} className="px-2 text-sm text-gray-500">
+              …
+            </li>
+          ) : (
+            <li key={item}>
+              <button
+                type="button"
+                onClick={() => onChange(item)}
+                className={`px-3 py-1 text-sm rounded border ${
+                  item === currentPage
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                {item}
+              </button>
+            </li>
+          ),
+        )}
       </ul>
 
       <button
