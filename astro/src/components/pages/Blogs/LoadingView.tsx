@@ -1,10 +1,7 @@
 export default function LoadingView() {
 	return (
-		<output className="flex justify-center" aria-label="読み込み中">
-			<div
-				className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"
-				aria-hidden="true"
-			></div>
-		</output>
+		<div className="flex justify-center" role="status" aria-label="読み込み中">
+			<div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+		</div>
 	);
 }
