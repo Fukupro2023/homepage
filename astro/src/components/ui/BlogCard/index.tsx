@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import { Icon } from "@iconify/react";
+import { PATH } from "@/constants";
 import type { BlogItem } from "@/types";
 import DefaultImage from "@/assets/images/default-image.jpeg";
 
@@ -24,13 +26,15 @@ export default function BlogCard({ blog }: Props) {
           </h3>
         </a>
         <div className="mt-2 flex flex-wrap gap-2">
-          {blog.tags.map((t) => (
-            <span
-              key={t.id ?? t.name}
-              className="text-xs px-2 py-1 bg-gray-100 rounded-full"
+          {blog.tags.map((tag) => (
+            <a
+              key={tag.id ?? tag.name}
+              href={`${PATH.BLOGS}?tag=${encodeURIComponent(tag.name)}`}
+              className="flex items-center"
             >
-              {t.name}
-            </span>
+              <Icon icon="ri:hashtag" />
+              <span className="text-sm text-gray-500">{tag.name}</span>
+            </a>
           ))}
         </div>
       </div>
