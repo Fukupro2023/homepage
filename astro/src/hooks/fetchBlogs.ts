@@ -3,7 +3,7 @@ import { MOCK_BLOGS } from "@/constants";
 import type { BlogItem } from "@/types";
 
 export type FetchBlogsParams = {
-	keyword?: string;
+	q?: string;
 	tag?: string;
 	limit?: number;
 	page?: number;
@@ -16,12 +16,12 @@ export type FetchBlogsResult = {
 };
 
 function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
-	const { keyword, tag, limit = 10, page = 1 } = params;
+	const { q, tag, limit = 10, page = 1 } = params;
 
 	let filtered = [...MOCK_BLOGS];
 
-	if (keyword) {
-		const k = keyword.toLowerCase();
+	if (q) {
+		const k = q.toLowerCase();
 		filtered = filtered.filter(
 			(b) => b.title.toLowerCase().includes(k) || b.content.toLowerCase().includes(k),
 		);
@@ -40,10 +40,10 @@ function getMockBlogs(params: FetchBlogsParams): FetchBlogsResult {
 }
 
 async function fetchBlogsFromApi(params: FetchBlogsParams): Promise<FetchBlogsResult> {
-	const { keyword, tag, limit = 10, page = 1 } = params;
+	const { q, tag, limit = 10, page = 1 } = params;
 	const searchParams = new URLSearchParams();
 
-	if (keyword) searchParams.set("keyword", keyword);
+	if (q) searchParams.set("q", q);
 	if (tag) searchParams.set("tag", tag);
 	searchParams.set("limit", String(limit));
 	searchParams.set("page", String(page));
