@@ -1,20 +1,17 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import type { MarkdownInstance } from "astro";
 import BlogArticle from "@/components/pages/BlogArticle/index.astro";
 import type { BlogItem } from "@/types";
 
-type MarkdownModule = {
-  frontmatter: {
-    title: string;
-    description?: string;
-    thumbnail?: string;
-    tags: string[];
-    author: string;
-    published_at: string;
-  };
-  Content: AstroComponentFactory;
-};
+type MarkdownModule = MarkdownInstance<{
+  title: string;
+  description?: string;
+  thumbnail?: string;
+  tags: string[];
+  author: string;
+  published_at: string;
+}>;
 
 export async function getStaticPaths() {
   // `src/contents/blogs/[id]/*.md` をすべてビルド対象にする
@@ -66,7 +63,10 @@ if (!entry) {
   throw new Error(`Blog not found for id: ${blog_id}`);
 }
 
-const { frontmatter, Content } = entry[1];
+const markdown = entry[1];
+const { frontmatter } = markdown;
+
+const rawContent = markdown.rawContent();
 const thumbnailUrl = images.find((image) => image.src.includes(`${blog_id}/${frontmatter.thumbnail}`));
 
 const blog: BlogItem = {
@@ -75,7 +75,7 @@ const blog: BlogItem = {
   description: frontmatter.description ?? "",
   thumbnail: thumbnailUrl?.src,
   tags: frontmatter.tags,
-  content: JSON.stringify(Content),
+  content: rawContent,
   author: frontmatter.author,
   published_at: frontmatter.published_at,
 };

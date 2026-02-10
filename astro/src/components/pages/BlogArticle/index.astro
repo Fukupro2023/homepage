@@ -12,23 +12,18 @@ type Props = {
 const { blog } = Astro.props as Props;
 
 const { title, description, thumbnail, tags, content } = blog;
-
 ---
 
-<Layout title={`${title} | 福プロ`}>
-  <article class="blog-article">
-    <div class="blog-header">
-      {thumbnail && (
-        <img src={thumbnail} alt={title} class="thumbnail" />
-      )}
-      <Heading as="h1">{title}</Heading>
-      {description && <p class="description">{description}</p>}
-      <Tags tags={tags} />
-    </div>
+<article class="blog-article">
+  <div class="blog-header">
+    {thumbnail && <img src={thumbnail} alt={title} class="thumbnail" />}
+    <Heading as="h1">{title}</Heading>
+    {description && <p class="description">{description}</p>}
+    <Tags tags={tags} />
+  </div>
 
-    <MarkdownContainer markdown={content} />
-  </article>
-</Layout>
+  <MarkdownContainer markdown={content} />
+</article>
 
 <style>
   .blog-article {
@@ -62,4 +57,3 @@ const { title, description, thumbnail, tags, content } = blog;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   }
 </style>
-
