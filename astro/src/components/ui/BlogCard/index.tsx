@@ -18,7 +18,7 @@ export default function BlogCard({ blog }: Props) {
 			/>
 			<div>
 				<p className="text-gray-500 text-sm">{dayjs(blog.published_at).format("YYYY-MM-DD")}</p>
-				<a href={`${PATH.BLOGS}/${blog.id}`} target="_blank" rel="noopener noreferrer">
+				<a href={`${PATH.BLOGS}/${blog.id}`}>
 					<h3 className="line-clamp-3 font-bold text-gray-800 text-lg hover:underline">
 						{blog.title}
 					</h3>
