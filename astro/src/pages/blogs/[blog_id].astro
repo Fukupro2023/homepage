@@ -1,0 +1,86 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import BlogArticle from "@/components/pages/BlogArticle/index.astro";
+import type { BlogItem } from "@/types";
+
+type MarkdownModule = {
+  frontmatter: {
+    title: string;
+    description?: string;
+    thumbnail?: string;
+    tags: string[];
+    author: string;
+    published_at: string;
+  };
+  Content: AstroComponentFactory;
+};
+
+export async function getStaticPaths() {
+  // `src/contents/blogs/[id]/*.md` をすべてビルド対象にする
+  const modules = import.meta.glob("../../contents/blogs/*/*.md");
+
+  return Object.keys(modules).map((path) => {
+    // パス例: "../../contents/blogs/1/1.md" から "1" を取得
+    const match = path.match(/blogs\/(\d+)\//);
+    const id = match?.[1];
+
+    if (!id) return undefined;
+
+    return {
+      params: {
+        blog_id: id,
+      },
+    };
+  }).filter(Boolean);
+}
+
+const blog_id = Astro.params?.blog_id;
+
+if (!blog_id) {
+  throw new Error("Blog ID is required");
+}
+
+const modules = import.meta.glob<MarkdownModule>(
+  "../../contents/blogs/*/*.md",
+  { eager: true }
+);
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+	"/src/assets/images/blogs/*/*.jpg",
+	{ eager: true },
+);
+
+// blog_id と一致する Markdown を探す
+const entry = Object.entries(modules).find(([path]) => {
+  const match = path.match(/blogs\/(\d+)\//);
+  const id = match?.[1];
+  return id === blog_id;
+});
+
+const images = Object.entries(imageModules)
+	.sort(([a], [b]) => a.localeCompare(b))
+	.map(([, mod]) => mod.default);
+
+if (!entry) {
+  throw new Error(`Blog not found for id: ${blog_id}`);
+}
+
+const { frontmatter, Content } = entry[1];
+const thumbnailUrl = images.find((image) => image.src.includes(`${blog_id}/${frontmatter.thumbnail}`));
+
+const blog: BlogItem = {
+  id: blog_id,
+  title: frontmatter.title,
+  description: frontmatter.description ?? "",
+  thumbnail: thumbnailUrl?.src,
+  tags: frontmatter.tags,
+  content: JSON.stringify(Content),
+  author: frontmatter.author,
+  published_at: frontmatter.published_at,
+};
+---
+
+<Layout title={`${frontmatter.title} | 福プロ`}>
+  <BlogArticle blog={blog}/>
+</Layout>
