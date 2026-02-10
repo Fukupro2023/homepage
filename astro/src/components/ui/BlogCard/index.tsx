@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import DefaultImage from "@/assets/images/default-image.jpeg";
 import type { BlogItem } from "@/types";
-import Tags from "../TagList/index.astro";
 import { PATH } from "@/constants";
+import TagListClient from "../TagListClient";
 
 type Props = {
 	blog: BlogItem;
@@ -23,7 +23,7 @@ export default function BlogCard({ blog }: Props) {
 						{blog.title}
 					</h3>
 				</a>
-				<Tags tags={blog.tags} />
+				<TagListClient tags={blog.tags} />
 			</div>
 		</div>
 	);
