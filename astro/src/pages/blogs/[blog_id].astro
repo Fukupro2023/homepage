@@ -17,19 +17,21 @@ export async function getStaticPaths() {
   // `src/contents/blogs/[id]/*.md` をすべてビルド対象にする
   const modules = import.meta.glob("../../contents/blogs/*/*.md");
 
-  return Object.keys(modules).map((path) => {
-    // パス例: "../../contents/blogs/1/1.md" から "1" を取得
-    const match = path.match(/blogs\/(\d+)\//);
-    const id = match?.[1];
+  return Object.keys(modules)
+    .map((path) => {
+      // パス例: "../../contents/blogs/1/1.md" から "1" を取得
+      const match = path.match(/blogs\/(\d+)\//);
+      const id = match?.[1];
 
-    if (!id) return undefined;
+      if (!id) return undefined;
 
-    return {
-      params: {
-        blog_id: id,
-      },
-    };
-  }).filter(Boolean);
+      return {
+        params: {
+          blog_id: id,
+        },
+      };
+    })
+    .filter(Boolean);
 }
 
 const blog_id = Astro.params?.blog_id;
@@ -40,12 +42,12 @@ if (!blog_id) {
 
 const modules = import.meta.glob<MarkdownModule>(
   "../../contents/blogs/*/*.md",
-  { eager: true }
+  { eager: true },
 );
 
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
-	"/src/assets/images/blogs/*/*.jpg",
-	{ eager: true },
+  "/src/assets/images/blogs/*/*.{jpg,png}",
+  { eager: true },
 );
 
 // blog_id と一致する Markdown を探す
@@ -55,10 +57,6 @@ const entry = Object.entries(modules).find(([path]) => {
   return id === blog_id;
 });
 
-const images = Object.entries(imageModules)
-	.sort(([a], [b]) => a.localeCompare(b))
-	.map(([, mod]) => mod.default);
-
 if (!entry) {
   throw new Error(`Blog not found for id: ${blog_id}`);
 }
@@ -66,14 +64,13 @@ if (!entry) {
 const markdown = entry[1];
 const { frontmatter } = markdown;
 
-const rawContent = markdown.rawContent();
-const thumbnailUrl = images.find((image) => image.src.includes(`${blog_id}/${frontmatter.thumbnail}`));
+const rawContent = markdown.rawContent()
 
 const blog: BlogItem = {
   id: blog_id,
   title: frontmatter.title,
   description: frontmatter.description ?? "",
-  thumbnail: thumbnailUrl?.src,
+  thumbnail: frontmatter.thumbnail,
   tags: frontmatter.tags,
   content: rawContent,
   author: frontmatter.author,
@@ -82,5 +79,5 @@ const blog: BlogItem = {
 ---
 
 <Layout title={`${frontmatter.title} | 福プロ`}>
-  <BlogArticle blog={blog}/>
+  <BlogArticle blog={blog} />
 </Layout>
