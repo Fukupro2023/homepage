@@ -1,8 +1,11 @@
 module Api
   class BlogsController < ActionController::API
+    DEFAULT_LIMIT = 10
+    MAX_LIMIT = 100
+
     def index
-      blogs = Blog.includes(:tags).order(published_at: :desc)
-      render json: serialize_blogs(blogs)
+      blogs = Blog.includes(:tags, header_image_attachment: :blob).order(published_at: :desc)
+      render json: paginate(blogs)
     end
 
     def search
@@ -21,10 +24,27 @@ module Api
         end
       end
 
-      render json: serialize_blogs(blogs)
+      render json: paginate(blogs)
     end
 
     private
+
+    def paginate(scope)
+      limit = [(params[:limit] || DEFAULT_LIMIT).to_i, MAX_LIMIT].min
+      page = [params[:page].to_i, 1].max
+      offset = (page - 1) * limit
+      total_count = scope.count
+
+      {
+        data: serialize_blogs(scope.limit(limit).offset(offset)),
+        meta: {
+          current_page: page,
+          total_pages: (total_count.to_f / limit).ceil,
+          total_count: total_count,
+          limit: limit
+        }
+      }
+    end
 
     def serialize_blogs(blogs)
       blogs.map { |blog|
