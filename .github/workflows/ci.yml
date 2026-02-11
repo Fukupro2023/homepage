@@ -176,7 +176,7 @@ jobs:
 
   astro_build:
     needs: changes
-    if: needs.changes.outputs.astro == 'true'
+    if: needs.changes.outputs.astro == 'true' || needs.changes.outputs.cms == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
