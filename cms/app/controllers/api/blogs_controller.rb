@@ -30,8 +30,8 @@ module Api
     private
 
     def paginate(scope)
-      limit = [(params[:limit] || DEFAULT_LIMIT).to_i, MAX_LIMIT].min
-      page = [params[:page].to_i, 1].max
+      limit = [ (params[:limit] || DEFAULT_LIMIT).to_i, MAX_LIMIT ].min
+      page = [ params[:page].to_i, 1 ].max
       offset = (page - 1) * limit
       total_count = scope.count
 
