@@ -16,11 +16,14 @@ services:
       context: ./cms
     depends_on:
       - db
+    env_file:
+      - cms/.env.development
+      - cms/.env.production
+      - cms/.env.test
+      - .env.local
     environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgres://cms:password@db:5432/cms_production
-      CMS_DATABASE_PASSWORD: password
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      DATABASE_URL: postgres://cms:password@db:5432/cms_database
+      DB_HOST: db
     ports:
       - "3000:80"
 
