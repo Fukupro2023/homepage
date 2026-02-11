@@ -15,15 +15,15 @@ const { src, title } = Astro.props as Props;
     <Image
       src={src}
       alt={`${title}のサムネイル`}
-      width={320}
-      height={160}
+      width={720}
+      height={400}
     />
   ) : (
     <Image
       src={DefaultImage}
       alt={`${title}のサムネイル`}
-      width={320}
-      height={160}
+      width={720}
+      height={400}
     />
   )
 }
