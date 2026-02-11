@@ -10,7 +10,7 @@ class Blog < ApplicationRecord
 
   scope :search_by_keyword, ->(keyword) {
     left_joins(:tags).where(
-      'blogs.title LIKE ? OR blogs.content LIKE ? OR tags.name LIKE ?',
+      "blogs.title LIKE ? OR blogs.content LIKE ? OR tags.name LIKE ?",
       "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"
     ).distinct
   }
@@ -20,7 +20,7 @@ class Blog < ApplicationRecord
   }
 
   scope :search_by_author, ->(author) {
-    where('blogs.author LIKE ?', "%#{author}%")
+    where("blogs.author LIKE ?", "%#{author}%")
   }
 
   def header_image_url
