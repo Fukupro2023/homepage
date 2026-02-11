@@ -146,3 +146,13 @@
   list-style: none;
 }
 
+.markdown-body blockquote {
+  color: #4b5563;
+  border-left-color: #6b7280;
+}
+
+.markdown-body hr {
+  background-color: #9ca3af !important;
+  border-bottom-color: #6b7280 !important;
+}
+
