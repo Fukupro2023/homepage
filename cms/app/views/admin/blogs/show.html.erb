@@ -12,7 +12,7 @@
   <dd><%= @blog.description %></dd>
 
   <dt>本文</dt>
-  <dd><%= simple_format(@blog.content) %></dd>
+  <dd><%= markdown(@blog.content) %></dd>
 
   <dt>タグ</dt>
   <dd><%= @blog.tags.map(&:name).join(", ") %></dd>
