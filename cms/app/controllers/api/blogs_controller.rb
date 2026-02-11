@@ -31,20 +31,33 @@ module Api
     private
 
     def paginate(scope)
-      limit = (params[:limit] || DEFAULT_LIMIT).to_i.clamp(1, MAX_LIMIT)
-      page = [ params[:page].to_i, 1 ].max
-      offset = (page - 1) * limit
       total_count = scope.count
 
-      {
-        data: serialize_blogs(scope.limit(limit).offset(offset)),
-        meta: {
-          current_page: page,
-          total_pages: (total_count.to_f / limit).ceil,
-          total_count: total_count,
-          limit: limit
+      if params[:page].present? || params[:limit].present?
+        limit = (params[:limit] || DEFAULT_LIMIT).to_i.clamp(1, MAX_LIMIT)
+        page = [ params[:page].to_i, 1 ].max
+        offset = (page - 1) * limit
+
+        {
+          data: serialize_blogs(scope.limit(limit).offset(offset)),
+          meta: {
+            current_page: page,
+            total_pages: (total_count.to_f / limit).ceil,
+            total_count: total_count,
+            limit: limit
+          }
         }
-      }
+      else
+        {
+          data: serialize_blogs(scope),
+          meta: {
+            current_page: 1,
+            total_pages: 1,
+            total_count: total_count,
+            limit: total_count
+          }
+        }
+      end
     end
 
     def serialize_blogs(blogs)
