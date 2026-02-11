@@ -60,7 +60,7 @@ export async function fetchBlogsDuringBuild() {
 		throw new Error(`Failed to fetch blogs: ${res.status} ${res.statusText}`);
 	}
 
-	const data = (await res.json()) as BlogFromApi[];
+	const { data } = await res.json();
 	const contentsDir = join(__dirname, "..", "contents", "blogs");
 	await mkdir(contentsDir, { recursive: true });
 
