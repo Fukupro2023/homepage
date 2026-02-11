@@ -1,5 +1,5 @@
-import type { BlogTag } from "@/types";
 import { PATH } from "@/constants";
+import type { BlogTag } from "@/types";
 
 export type FetchTagsResult = {
 	tags: BlogTag[];

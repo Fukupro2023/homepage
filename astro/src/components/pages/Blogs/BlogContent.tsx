@@ -7,15 +7,8 @@ import SearchForm from "./SearchForm";
 import { useBlogList } from "./useBlogList";
 
 export default function BlogContent() {
-	const {
-		inputValue,
-		setInputValue,
-		setPage,
-		handleSearchSubmit,
-		data,
-		error,
-		isLoading,
-	} = useBlogList();
+	const { inputValue, setInputValue, setPage, handleSearchSubmit, data, error, isLoading } =
+		useBlogList();
 
 	if (error) {
 		return <div>Error: {error.message}</div>;
@@ -26,7 +19,7 @@ export default function BlogContent() {
 	return (
 		<section id="blogs">
 			<SearchForm value={inputValue} onChange={setInputValue} onSubmit={handleSearchSubmit} />
-			
+
 			<Pagination currentPage={currentPage} totalPages={totalPages} onChange={setPage} />
 			<div>
 				{isLoading ? (
