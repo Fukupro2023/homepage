@@ -3,18 +3,30 @@ import Image from "astro/components/Image.astro";
 import DefaultImage from "@/assets/images/default-image.jpeg";
 
 type Props = {
-	src?: string;
-	title: string;
+  src?: string;
+  title: string;
 };
 
 const { src, title } = Astro.props as Props;
 ---
 
-{src ? (
-  <Image src={src as string} alt={`${title}のサムネイル`} width={320} height={160} />
-) : (
-  <Image src={DefaultImage} alt={`${title}のサムネイル`} width={320} height={160} />
-)}
+{
+  src ? (
+    <Image
+      src={src}
+      alt={`${title}のサムネイル`}
+      width={320}
+      height={160}
+    />
+  ) : (
+    <Image
+      src={DefaultImage}
+      alt={`${title}のサムネイル`}
+      width={320}
+      height={160}
+    />
+  )
+}
 
 <style>
   img {
