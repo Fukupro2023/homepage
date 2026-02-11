@@ -11,7 +11,7 @@ module Api
 
       sorted_tags = tags_with_count.sort_by { |tag| -tag[:count] }
 
-      render json: { 
+      render json: {
         tags: sorted_tags,
         count: sorted_tags.count
       }
