@@ -1,12 +1,12 @@
 ---
 import Image from "astro/components/Image.astro";
 import { Icon } from "astro-icon/components";
+import dayjs from "dayjs";
 import Heading from "@/components/ui/Heading/index.astro";
 import MarkdownContainer from "@/components/ui/MarkdownContainer/index.astro";
 import Tags from "@/components/ui/TagList/index.astro";
 import { PATH } from "@/constants";
 import type { BlogItem } from "@/types";
-import dayjs from "dayjs";
 
 type Props = {
 	blog: BlogItem;
@@ -14,8 +14,7 @@ type Props = {
 
 const { blog } = Astro.props as Props;
 
-const { title, description, thumbnail, tags, content, published_at, author } =
-	blog;
+const { title, description, thumbnail, tags, content, published_at, author } = blog;
 ---
 
 {
