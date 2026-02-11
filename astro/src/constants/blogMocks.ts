@@ -23,7 +23,7 @@ function toBlogItem([path, mod]: [string, MarkdownModule]): BlogItem {
 	return {
 		id,
 		title: frontmatter.title,
-		content: frontmatter.description ?? "",
+		content: mod.rawContent(),
 		description: frontmatter.description,
 		author: frontmatter.author,
 		thumbnail: frontmatter.thumbnail,
