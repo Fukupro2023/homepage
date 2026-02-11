@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import DefaultImage from "@/assets/images/default-image.jpeg";
 import { PATH } from "@/constants";
 import type { BlogItem } from "@/types";
 import TagListClient from "../TagListClient";
@@ -12,7 +11,7 @@ export default function BlogCard({ blog }: Props) {
 	return (
 		<div className="flex flex-row-reverse justify-between rounded-md border bg-white p-4 shadow-md md:block">
 			<img
-				src={blog.thumbnail ?? DefaultImage.src}
+				src={blog.thumbnail ?? "/images/default-thumbnail.jpg"}
 				alt={blog.title}
 				className="h-40 w-40 flex-shrink-0 object-cover md:h-40 md:w-80"
 			/>

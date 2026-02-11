@@ -59,6 +59,12 @@ const blog: BlogItem = {
 };
 ---
 
-<Layout title={`${frontmatter.title} | 福プロ`}>
+<Layout
+  title={`${frontmatter.title} | 福プロ`}
+  description={frontmatter.description ?? "福プロ（福山大学学友会プログラミングサークル）の記事です。"}
+  author={frontmatter.author ?? "福プロ"}
+  thumbnail={frontmatter.thumbnail ?? "/images/default-thumbnail.jpg"}
+  tags={frontmatter.tags}
+>
   <BlogArticle blog={blog} />
 </Layout>
