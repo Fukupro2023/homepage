@@ -25,15 +25,21 @@ function escapeYamlString(s: string): string {
 }
 
 function toFrontmatter(blog: BlogFromApi): string {
+	const title = blog.title;
+	const author = blog.author ?? "";
+	const description = blog.description ?? "";
+	const publishedAt = blog.published_at;
+	const tags = Array.isArray(blog.tags) ? blog.tags : [];
+	const thumbnail = blog.thumbnail ?? "";
 	const lines = [
 		"---",
-		`title: ${escapeYamlString(blog.title)}`,
-		`author: ${escapeYamlString(blog.author)}`,
-		`description: ${escapeYamlString(blog.description)}`,
-		`published_at: ${blog.published_at}`,
+		`title: ${escapeYamlString(title)}`,
+		`author: ${escapeYamlString(author)}`,
+		`description: ${escapeYamlString(description)}`,
+		`published_at: ${escapeYamlString(publishedAt)}`,
 		"tags:",
-		...blog.tags.map((t) => `  - ${escapeYamlString(t)}`),
-		`thumbnail: ${escapeYamlString(blog.thumbnail || "")}`,
+		...tags.map((t) => `  - ${escapeYamlString(t)}`),
+		`thumbnail: ${escapeYamlString(thumbnail)}`,
 		"",
 		"---",
 		"",
