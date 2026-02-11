@@ -35,12 +35,17 @@ function wrapCodeBlock(codeEl: HTMLElement) {
 	copyButton.className = "code-block-copy";
 	copyButton.textContent = "Copy";
 	copyButton.addEventListener("click", async () => {
-		await navigator.clipboard.writeText(codeEl.textContent || "");
 		const original = copyButton.textContent;
-		copyButton.textContent = "Copied";
-		setTimeout(() => {
-			copyButton.textContent = original;
-		}, 1500);
+		try {
+			await navigator.clipboard.writeText(codeEl.textContent || "");
+			copyButton.textContent = "Copied";
+		} catch {
+			copyButton.textContent = "Copy failed";
+		} finally {
+			setTimeout(() => {
+				copyButton.textContent = original;
+			}, 1500);
+		}
 	});
 
 	header.appendChild(copyButton);
