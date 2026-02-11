@@ -1,10 +1,10 @@
 ---
-import { PATH } from "@/constants";
 import { Icon } from "astro-icon/components";
+import { PATH } from "@/constants";
 
 type Props = {
-  tags: string[];
-  bgColor?: string;
+	tags: string[];
+	bgColor?: string;
 };
 
 const { tags, bgColor = "bg-gray-100" } = Astro.props as Props;

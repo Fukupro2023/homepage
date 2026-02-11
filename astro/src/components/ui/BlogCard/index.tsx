@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import DefaultImage from "@/assets/images/default-image.jpeg";
-import type { BlogItem } from "@/types";
 import { PATH } from "@/constants";
+import type { BlogItem } from "@/types";
 import TagListClient from "../TagListClient";
 
 type Props = {

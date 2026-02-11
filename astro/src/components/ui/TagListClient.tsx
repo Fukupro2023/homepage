@@ -24,4 +24,3 @@ export default function TagListClient({ tags }: Props) {
 		</div>
 	);
 }
-
