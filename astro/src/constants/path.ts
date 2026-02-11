@@ -1,10 +1,10 @@
 export const PATH = {
 	HOME: "/",
-	BLOGS: "/blogs/",
+	BLOGS: "/blogs",
 	FAQ: "/faq/",
 	BLOG: {
 		GROUP_ACTIVITIES: "/blogs/group-activities/",
 	},
-	SEARCH: `${import.meta.env.BACKEND_URL}/api/v1/blogs/search`,
-	TAGS: `${import.meta.env.BACKEND_URL}/api/v1/blogs/tags`,
+	SEARCH: `${import.meta.env.BACKEND_URL}/api/blogs/search`,
+	TAGS: `${import.meta.env.BACKEND_URL}/api/tags`,
 };

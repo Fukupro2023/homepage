@@ -10,14 +10,26 @@ type Props = {
 const { src, title } = Astro.props as Props;
 ---
 
-{src ? (
-  <Image src={src as string} alt={`${title}のサムネイル`} width={320} height={160} />
-) : (
-  <Image src={DefaultImage} alt={`${title}のサムネイル`} width={320} height={160} />
-)}
+{
+  src ? (
+    <Image
+      src={src}
+      alt={`${title}のサムネイル`}
+      width={720}
+      height={400}
+    />
+  ) : (
+    <Image
+      src={DefaultImage}
+      alt={`${title}のサムネイル`}
+      width={720}
+      height={400}
+    />
+  )
+}
 
 <style>
   img {
-    @apply object-cover w-40 h-40 flex-shrink-0 md:w-80 md:h-40;
+    @apply object-cover w-40 h-40 flex-shrink-0 sm:w-80 md:h-40;
   }
 </style>
