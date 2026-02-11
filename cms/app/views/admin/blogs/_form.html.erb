@@ -44,10 +44,8 @@
   </div>
 
   <div>
-    <label>タグ</label><br>
-    <%= f.collection_check_boxes(:tag_ids, Tag.all.order(:name), :id, :name) do |b| %>
-      <label><%= b.check_box %> <%= b.text %></label>
-    <% end %>
+    <%= f.label :tag_names, "タグ（カンマ区切り）" %><br>
+    <%= f.text_field :tag_names, value: blog.tags.map(&:name).join(", "), size: 60 %>
   </div>
 
   <div>

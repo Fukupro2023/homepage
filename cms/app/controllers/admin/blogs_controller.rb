@@ -14,6 +14,7 @@ class Admin::BlogsController < ApplicationController
 
   def create
     @blog = Blog.new(blog_params)
+    assign_tags
 
     if @blog.save
       redirect_to admin_blog_path(@blog), notice: "ブログを作成しました。"
@@ -26,7 +27,10 @@ class Admin::BlogsController < ApplicationController
   end
 
   def update
-    if @blog.update(blog_params)
+    @blog.assign_attributes(blog_params)
+    assign_tags
+
+    if @blog.save
       redirect_to admin_blog_path(@blog), notice: "ブログを更新しました。"
     else
       render :edit, status: :unprocessable_entity
@@ -44,7 +48,14 @@ class Admin::BlogsController < ApplicationController
     @blog = Blog.find(params[:id])
   end
 
+  def assign_tags
+    return unless params[:blog][:tag_names]
+
+    tag_names = params[:blog][:tag_names].split(",").map(&:strip).reject(&:empty?)
+    @blog.tags = tag_names.map { |name| Tag.find_or_create_by(name: name) }
+  end
+
   def blog_params
-    params.require(:blog).permit(:title, :description, :content, :author, :published_at, :header_image, tag_ids: [])
+    params.require(:blog).permit(:title, :description, :content, :author, :published_at, :header_image)
   end
 end
