@@ -12,11 +12,12 @@ import "@splidejs/splide/css/skyblue";
 
 const props = Astro.props;
 const title = props.title || "福プロ | 福山大学学友会プログラミングサークル";
-const description = props.description || "福プロ（福山大学学友会プログラミングサークル）のホームページです。プログラミングやゲーム、メタバースなどITに関する活動をしています。";
+const description =
+	props.description ||
+	"福プロ（福山大学学友会プログラミングサークル）のホームページです。プログラミングやゲーム、メタバースなどITに関する活動をしています。";
 const author = props.author || "福プロ";
 const thumbnail = props.thumbnail || "/favicon.svg";
-const tags = ["福プロ", "福山大学", "プログラミングサークル", ...props.tags || []];
-
+const tags = ["福プロ", "福山大学", "プログラミングサークル", ...(props.tags || [])];
 ---
 
 <!doctype html>
