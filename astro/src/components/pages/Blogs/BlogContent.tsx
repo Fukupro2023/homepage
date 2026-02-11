@@ -29,7 +29,7 @@ export default function BlogContent() {
 	return (
 		<section id="blogs">
 			<SearchForm value={inputValue} onChange={setInputValue} onSubmit={handleSearchSubmit} />
-			<TagList tags={allTags} onTagClick={handleTagClick} />
+			<TagList tags={allTags?.tags} onTagClick={handleTagClick} />
 			<div className="py-6">
 				{isLoading ? (
 					<LoadingView />
