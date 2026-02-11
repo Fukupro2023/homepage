@@ -64,7 +64,10 @@ function enhance() {
   const selector = ".markdown-body pre > code.hljs";
   document
     .querySelectorAll<HTMLElement>(selector)
-    .forEach((codeEl) => wrapCodeBlock(codeEl));
+    .forEach((codeEl) => {
+      if (codeEl.classList.contains("language-math")) return;
+      wrapCodeBlock(codeEl);
+    });
 }
 
 if (typeof document !== "undefined") {

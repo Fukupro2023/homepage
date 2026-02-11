@@ -3,6 +3,7 @@ import { Marked } from "marked";
 import type { Tokens } from "marked";
 import { markedHighlight } from "marked-highlight";
 import hljs from "highlight.js";
+import katex from "katex";
 
 type Props = {
   markdown: string;
@@ -18,6 +19,19 @@ const marked = new Marked(
     langPrefix: "hljs language-",
     highlight(code, lang) {
       const pureLang = (lang || "").split(":")[0];
+
+      // 数式ブロック（```math）は KaTeX で描画
+      if (pureLang === "math") {
+        try {
+          return katex.renderToString(code.trim(), {
+            displayMode: true,
+            throwOnError: false,
+            output: "html",
+          });
+        } catch {
+          return code;
+        }
+      }
 
       if (pureLang && hljs.getLanguage(pureLang)) {
         return hljs.highlight(code, { language: pureLang }).value;
