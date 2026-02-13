@@ -52,7 +52,7 @@
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 16px;
   line-height: 1.5;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .markdown-body > *:first-child {
@@ -207,7 +207,7 @@
   margin: 0;
   overflow: visible;
   line-height: inherit;
-  word-wrap: normal;
+  overflow-wrap: normal;
   background-color: transparent;
   border: 0;
   font-size: 100%;
