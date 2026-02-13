@@ -21,9 +21,8 @@ class Admin::BlogsController < ApplicationController
 
   def create
     @blog = Blog.new(blog_params)
-    assign_tags
 
-    if @blog.save
+    if save_blog_with_tags
       redirect_to admin_blog_path(@blog), notice: "ブログを作成しました。"
     else
       render :new, status: :unprocessable_entity
@@ -35,9 +34,8 @@ class Admin::BlogsController < ApplicationController
 
   def update
     @blog.assign_attributes(blog_params)
-    assign_tags
 
-    if @blog.save
+    if save_blog_with_tags
       redirect_to admin_blog_path(@blog), notice: "ブログを更新しました。"
     else
       render :edit, status: :unprocessable_entity
@@ -53,6 +51,21 @@ class Admin::BlogsController < ApplicationController
 
   def set_blog
     @blog = Blog.find(params[:id])
+  end
+
+  def save_blog_with_tags
+    saved = false
+
+    ActiveRecord::Base.transaction do
+      assign_tags
+      if @blog.save
+        saved = true
+      else
+        raise ActiveRecord::Rollback
+      end
+    end
+
+    saved
   end
 
   def assign_tags
