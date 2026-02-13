@@ -22,8 +22,8 @@ module ApplicationHelper
     pages = []
     pages << 1
 
-    start = [current - 1, 2].max
-    finish = [current + 1, total - 1].min
+    start = [ current - 1, 2 ].max
+    finish = [ current + 1, total - 1 ].min
 
     pages << :ellipsis if start > 2
     (start..finish).each { |p| pages << p }

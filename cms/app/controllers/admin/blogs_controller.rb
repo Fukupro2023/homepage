@@ -4,11 +4,11 @@ class Admin::BlogsController < ApplicationController
   PER_PAGE = 9
 
   def index
-    @page = [params.fetch(:page, 1).to_i, 1].max
+    @page = [ params.fetch(:page, 1).to_i, 1 ].max
     all_blogs = Blog.includes(:tags).order(published_at: :desc)
     @total_count = all_blogs.count
     @total_pages = (@total_count.to_f / PER_PAGE).ceil
-    @page = [@page, @total_pages].min if @total_pages > 0
+    @page = [ @page, @total_pages ].min if @total_pages > 0
     @blogs = all_blogs.offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
   end
 
