@@ -37,4 +37,5 @@
 </dl>
 
 <%= link_to "編集", edit_admin_blog_path(@blog) %>
+<%= link_to "削除", admin_blog_path(@blog), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
 <%= link_to "一覧に戻る", admin_blogs_path %>
