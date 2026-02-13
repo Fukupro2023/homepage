@@ -56,9 +56,9 @@ class Admin::BlogsController < ApplicationController
   end
 
   def assign_tags
-    return unless params[:blog][:tag_names]
+    return unless params[:blog]&.key?(:tag_names)
 
-    tag_names = params[:blog][:tag_names].split(",").map(&:strip).reject(&:empty?)
+    tag_names = Array(params[:blog][:tag_names]).map(&:strip).reject(&:empty?)
     @blog.tags = tag_names.map { |name| Tag.find_or_create_by(name: name) }
   end
 
