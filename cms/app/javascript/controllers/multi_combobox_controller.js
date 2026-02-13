@@ -201,10 +201,10 @@ export default class extends Controller {
   _filterAndRender(query) {
     const rawQuery = (query || "")
     const q = rawQuery.toLowerCase()
-    const selectedValues = new Set(this.selectedValue.map(i => i.value))
+    const selectedValues = new Set(this.selectedValue.map(i => String(i.value)))
 
     const filtered = this.itemsValue.filter(item =>
-      !selectedValues.has(item.value) &&
+      !selectedValues.has(String(item.value)) &&
       item.label.toLowerCase().includes(q)
     )
 
