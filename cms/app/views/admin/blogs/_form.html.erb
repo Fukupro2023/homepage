@@ -26,7 +26,7 @@
         <%= link_to "詳細", admin_blog_path(blog), class: "text-gray-500 hover:text-gray-800" %>
       <% end %>
     </div>
-    <%= f.submit blog.persisted? ? "更新する" : "公開する",
+    <%= f.submit blog.persisted? ? "更新する" : "保存する",
         class: "px-5 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md cursor-pointer shadow-md transition-colors" %>
   </div>
 
