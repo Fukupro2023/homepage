@@ -57,7 +57,10 @@ marked.use({
 
 			return `<h${level} class="markdown-heading"><span aria-hidden="true" class="heading-prefix">${hashes}</span>${content}</h${level}>`;
 		},
-		link(this: { parser: { parseInline: (tokens: import("marked").Token[]) => string } }, token: Tokens.Link) {
+		link(
+			this: { parser: { parseInline: (tokens: import("marked").Token[]) => string } },
+			token: Tokens.Link,
+		) {
 			const href = token.href ?? "";
 			const title = token.title ? ` title="${String(token.title).replace(/"/g, "&quot;")}"` : "";
 			const body = this.parser.parseInline(token.tokens);
