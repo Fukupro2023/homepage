@@ -50,6 +50,7 @@ variable "basic_auth_password" {
 
 variable "git_repo_url" {
   type        = string
+  default     = "https://github.com/Fukupro2023/homepage.git"
   description = "デプロイするリポジトリの URL"
 }
 
@@ -57,10 +58,4 @@ variable "git_ref" {
   type        = string
   default     = "main"
   description = "デプロイするブランチまたはタグ"
-}
-
-variable "deploy_trigger" {
-  type        = string
-  default     = ""
-  description = "再デプロイ用。値を変えると deploy_app が再実行される（例: -var='deploy_trigger=$(git rev-parse HEAD)' または -var='deploy_trigger=1'）"
 }

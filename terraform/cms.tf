@@ -150,7 +150,6 @@ resource "null_resource" "deploy_app" {
     repo    = var.git_repo_url
     ref     = var.git_ref
     env     = local_file.env_production.content_sha256
-    deploy  = var.deploy_trigger
   }
 
   connection {
