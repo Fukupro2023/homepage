@@ -111,7 +111,12 @@ resource "time_sleep" "wait_boot" {
 
 # 本番用 .env（秘密は .gitignore されたファイルに書き出し）
 resource "local_file" "env_production" {
-  content         = "RAILS_MASTER_KEY=${var.rails_master_key}\nCMS_DATABASE_PASSWORD=${var.cms_database_password}\n"
+  content         = <<-EOT
+RAILS_MASTER_KEY=${var.rails_master_key}
+CMS_DATABASE_PASSWORD=${var.cms_database_password}
+BASIC_AUTH_USER=${var.basic_auth_user}
+BASIC_AUTH_PASSWORD=${var.basic_auth_password}
+EOT
   filename        = "${path.module}/.env.production.generated"
   file_permission = "0600"
 }

@@ -36,6 +36,18 @@ variable "cms_database_password" {
   description = "本番 PostgreSQL の CMS ユーザー用パスワード"
 }
 
+variable "basic_auth_user" {
+  type        = string
+  sensitive   = true
+  description = "Rails 本番の Basic 認証ユーザー名（ApplicationController で必須）"
+}
+
+variable "basic_auth_password" {
+  type        = string
+  sensitive   = true
+  description = "Rails 本番の Basic 認証パスワード"
+}
+
 variable "git_repo_url" {
   type        = string
   description = "デプロイするリポジトリの URL"
