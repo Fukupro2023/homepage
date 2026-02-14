@@ -62,6 +62,7 @@ production:
   primary: &primary_production
     <<: *default
     database: cms_production
+    host: <%= ENV.fetch("CMS_DATABASE_HOST", "127.0.0.1") %>
     username: cms
     password: <%= ENV["CMS_DATABASE_PASSWORD"] %>
   cache:
