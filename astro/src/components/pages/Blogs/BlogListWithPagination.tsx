@@ -1,4 +1,4 @@
-import BlogCard from "@/components/ui/BlogCard/index.astro";
+import BlogCard from "@/components/ui/BlogCard/index.tsx";
 import type { BlogItem } from "@/types";
 import LoadingView from "./LoadingView";
 import NoDataView from "./NoDataView";
