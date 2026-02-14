@@ -10,7 +10,17 @@ import "@/styles/markdown.css";
 import "katex/dist/katex.min.css";
 import "@splidejs/splide/css/skyblue";
 
-const props = Astro.props;
+interface Props {
+	title?: string;
+	description?: string;
+	author?: string;
+	thumbnail?: string;
+	tags?: string[];
+	/** クローラーにインデックスさせない（CSRでコンテンツのないページ用） */
+	noindex?: boolean;
+}
+
+const props = Astro.props as Props;
 const title = props.title || "福プロ | 福山大学学友会プログラミングサークル";
 const description =
 	props.description ||
@@ -18,6 +28,7 @@ const description =
 const author = props.author || "福プロ";
 const thumbnail = props.thumbnail || `${Astro.url.origin}/favicon.svg`;
 const tags = ["福プロ", "福山大学", "プログラミングサークル", ...(props.tags || [])];
+const noindex = props.noindex ?? false;
 ---
 
 <!doctype html>
@@ -39,7 +50,8 @@ const tags = ["福プロ", "福山大学", "プログラミングサークル", 
 		<meta property="og:site_name" content="福プロ | 福山大学学友会プログラミングサークル" />
 		<meta property="og:locale" content="ja_JP"  />
 		<meta name="keywords" content={tags.join(",")} />
-		
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+
 		<meta name="generator" content={Astro.generator} />
 
 	</head>
