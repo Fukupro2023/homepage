@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" fill="none" viewBox="0 0 1440 1024">
-  <path fill="url(#blue-purple-a)" fill-rule="evenodd" d="M0 256c120-80 280-40 400 80 100 100 80 280 120 400 30 90 120 150 80 288H0V256Z" clip-rule="evenodd" style="opacity:.2"/>
-  <path fill="url(#blue-purple-b)" fill-rule="evenodd" d="M1440 0v400c-80 60-200 20-320-60-140-95-260-40-400 80-120 100-200 200-320 200v304h1440V0Z" clip-rule="evenodd" style="opacity:.18"/>
-  <ellipse cx="720" cy="900" rx="500" ry="200" fill="url(#blue-purple-c)" style="opacity:.12"/>
+  <path fill="url(#blue-purple-a)" fill-rule="evenodd" d="M0 256c120-80 280-40 400 80 100 100 80 280 120 400 30 90 120 150 80 288H0V256Z" clip-rule="evenodd" style="opacity:.1"/>
+  <path fill="url(#blue-purple-b)" fill-rule="evenodd" d="M1440 0v400c-80 60-200 20-320-60-140-95-260-40-400 80-120 100-200 200-320 200v304h1440V0Z" clip-rule="evenodd" style="opacity:.09"/>
+  <ellipse cx="720" cy="900" rx="500" ry="200" fill="url(#blue-purple-c)" style="opacity:.06"/>
   <defs>
     <linearGradient id="blue-purple-a" x1="0" x2="600" y1="0" y2="600" gradientUnits="userSpaceOnUse">
       <stop stop-color="#2563eb"/>
