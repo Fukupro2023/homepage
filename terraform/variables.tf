@@ -51,11 +51,21 @@ variable "basic_auth_password" {
 variable "git_repo_url" {
   type        = string
   default     = "https://github.com/Fukupro2023/homepage.git"
-  description = "デプロイするリポジトリの URL"
+  description = "デプロイするリポジトリの URL（GitHub HTTPS のみ）"
+
+  validation {
+    condition     = can(regex("^https://github\\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+(\\.git)?$", var.git_repo_url))
+    error_message = "git_repo_url は https://github.com/owner/repo または https://github.com/owner/repo.git 形式の GitHub HTTPS URL である必要があります。"
+  }
 }
 
 variable "git_ref" {
   type        = string
   default     = "main"
   description = "デプロイするブランチまたはタグ"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._/\\-]+$", var.git_ref))
+    error_message = "git_ref には英数字、ドット(.)、アンダースコア(_)、ハイフン(-)、スラッシュ(/) のみ使用できます。"
+  }
 }
