@@ -1,4 +1,5 @@
 import BlogListWithPagination from "./BlogListWithPagination";
+import LoadingView from "./LoadingView";
 import SearchForm from "./SearchForm";
 import { useBlogList } from "./useBlogList";
 
@@ -13,6 +14,7 @@ export default function BlogContent() {
 	return (
 		<section id="blogs">
 			<SearchForm value={inputValue} onChange={setInputValue} onSubmit={handleSearchSubmit} />
+			{isLoading && !data && <LoadingView />}
 			{data?.status === "success" && (
 				<BlogListWithPagination
 					blogs={data.blogs}
