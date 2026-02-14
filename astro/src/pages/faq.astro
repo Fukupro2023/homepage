@@ -1,13 +1,14 @@
 ---
 import Welcome from "@/components/Welcome.astro";
 import Layout from "@/layouts/Layout.astro";
+import { PATH } from "@/constants";
 ---
 
 <Layout
   title="よくある質問 | 福プロ"
   description="福プロ（福山大学学友会プログラミングサークル）のよくある質問ページです。"
   author="福プロ"
-  thumbnail="/favicon.svg"
+  thumbnail={PATH.IMAGES("favicon.svg")}
   tags={["よくある質問", "FAQ"]}
 >
   <Welcome />

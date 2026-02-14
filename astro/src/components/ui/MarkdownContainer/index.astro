@@ -58,11 +58,15 @@ marked.use({
 			return `<h${level} class="markdown-heading"><span aria-hidden="true" class="heading-prefix">${hashes}</span>${content}</h${level}>`;
 		},
 		link(
-			this: { parser: { parseInline: (tokens: import("marked").Token[]) => string } },
+			this: {
+				parser: { parseInline: (tokens: import("marked").Token[]) => string };
+			},
 			token: Tokens.Link,
 		) {
 			const href = token.href ?? "";
-			const title = token.title ? ` title="${String(token.title).replace(/"/g, "&quot;")}"` : "";
+			const title = token.title
+				? ` title="${String(token.title).replace(/"/g, "&quot;")}"`
+				: "";
 			const body = this.parser.parseInline(token.tokens);
 			return `<a href="${href.replace(/"/g, "&quot;")}"${title} target="_blank" rel="noopener noreferrer">${body}</a>`;
 		},
@@ -73,8 +77,8 @@ const parsedMarkdown = marked.parse(markdown);
 ---
 
 <div
-  class={`markdown-body ${className ?? ""}`}
-  style="background-color: transparent;"
-  set:html={parsedMarkdown}
+	class={`markdown-body ${className ?? ""}`}
+	style="background-color: transparent;"
+	set:html={parsedMarkdown}
 />
 <script src="/src/components/ui/MarkdownContainer/codeEnhancer.ts"></script>

@@ -1,6 +1,7 @@
 ---
 import Image from "astro/components/Image.astro";
 import { blogCardStyles } from "./styles";
+import { PATH } from "@/constants";
 
 type Props = {
 	src?: string;
@@ -12,7 +13,7 @@ const { src, title } = Astro.props as Props;
 
 {
   <Image
-    src={src ?? "/images/default-thumbnail.jpg"}
+    src={src ?? PATH.IMAGES("default-thumbnail.jpg")}
     alt={`${title}のサムネイル`}
     width={720}
     height={400}
