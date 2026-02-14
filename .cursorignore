@@ -3,3 +3,6 @@
 # 環境変数ファイル
 .env
 .env.example
+
+# Terraform
+terraform/terraform.tfvars
