@@ -21,21 +21,13 @@ pnpm dev
 
 ### CMS（Rails + PostgreSQL, Docker）
 
-```bash
-cd /Users/itojum/user/univ/homepage
-export RAILS_MASTER_KEY="$(cat cms/config/master.key)"
-docker compose up --build
-```
-
-ブラウザで `http://localhost:3000` にアクセス。
-
-※もし `cms/config/master.key` が存在しない場合は、事前に以下を一度実行して生成してください:
+#### 初期設定
+`.env.example` をコピーして `.env` を作成し、必要な環境変数を設定してください。
+`RAILS_MASTER_KEY` は `cms/config/master.key` の内容をメンバーから共有してもらって設定してください。
 
 ```bash
 cd cms
 bundle install
-bin/rails credentials:edit
-bin/dev
+docker compose up --build
 ```
-
-詳しい設定やコマンドは、必要になったときに追記してください。
+ブラウザで `http://localhost:3000` にアクセス
