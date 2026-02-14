@@ -13,11 +13,10 @@ cd "$CMS_DIR"
 ENV_FILE=".env.production"
 [ -f "$ENV_FILE" ] || { echo "$ENV_FILE がありません"; exit 1; }
 
-CONTAINER="cms-db-1"
 for db in cms_production_cache cms_production_queue cms_production_cable; do
-  sudo docker exec "$CONTAINER" psql -v ON_ERROR_STOP=0 -U cms -d cms_production -c "CREATE DATABASE $db;" || true
+  sudo docker compose -f docker-compose.prod.yml --env-file .env.production exec db psql -v ON_ERROR_STOP=0 -U cms -d cms_production -c "CREATE DATABASE $db;" || true
 done
 for db in cms_production_cache cms_production_queue cms_production_cable; do
-  sudo docker exec "$CONTAINER" psql -v ON_ERROR_STOP=1 -U cms -d cms_production -c "GRANT ALL PRIVILEGES ON DATABASE $db TO cms;"
+  sudo docker compose -f docker-compose.prod.yml --env-file .env.production exec db psql -v ON_ERROR_STOP=1 -U cms -d cms_production -c "GRANT ALL PRIVILEGES ON DATABASE $db TO cms;"
 done
 echo "DB 作成完了。Rails を再起動: sudo docker compose -f docker-compose.prod.yml --env-file .env.production up -d cms"
