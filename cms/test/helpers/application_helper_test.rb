@@ -39,11 +39,11 @@ class ApplicationHelperTest < ActionView::TestCase
 
   # ===== page_numbers_for =====
   test "page_numbers_for should return all pages when total <= 5" do
-    assert_equal [1, 2, 3, 4, 5], page_numbers_for(3, 5)
+    assert_equal [ 1, 2, 3, 4, 5 ], page_numbers_for(3, 5)
   end
 
   test "page_numbers_for should return all pages when total is 1" do
-    assert_equal [1], page_numbers_for(1, 1)
+    assert_equal [ 1 ], page_numbers_for(1, 1)
   end
 
   test "page_numbers_for should include first and last page" do
