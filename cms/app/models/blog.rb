@@ -28,7 +28,7 @@ class Blog < ApplicationRecord
 
   def header_image_url
     if header_image.attached?
-      Rails.application.routes.url_helpers.rails_blob_url(header_image, only_path: true)
+      Rails.application.routes.url_helpers.rails_blob_url(header_image)
     else
       nil
     end
