@@ -44,7 +44,7 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
         },
         headers: { "Authorization" => @auth_credentials }
     end
-    assert_redirected_to admin_blog_url(Blog.last)
+    assert_redirected_to admin_blog_url(Blog.order(created_at: :desc).first)
   end
 
   # ===== edit =====
