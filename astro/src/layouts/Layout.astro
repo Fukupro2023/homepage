@@ -27,7 +27,7 @@ const description =
 	props.description ||
 	"福プロ（福山大学学友会プログラミングサークル）のホームページです。プログラミングやゲーム、メタバースなどITに関する活動をしています。";
 const author = props.author || "福プロ";
-const thumbnailRaw = props.thumbnail || PATH.IMAGES("favicon.svg");
+const thumbnailRaw = props.thumbnail || "/favicon.svg";
 const siteOrigin = Astro.site ?? Astro.url.origin;
 const thumbnail =
 	thumbnailRaw.startsWith("http://") || thumbnailRaw.startsWith("https://")
@@ -42,8 +42,8 @@ const noindex = props.noindex ?? false;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href={PATH.IMAGES("favicon.svg")} />
-		<link rel="icon" href={`${PATH.HOME}/favicon.ico`} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
 		<title>{title}</title>
 		<meta content={description} name="description">
 		<meta content={author} name="author" />
