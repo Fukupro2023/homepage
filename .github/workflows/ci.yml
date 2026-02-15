@@ -65,6 +65,9 @@ jobs:
     needs: changes
     if: needs.changes.outputs.cms == 'true'
     runs-on: ubuntu-latest
+    env:
+      CMS_DATABASE_NAME: cms_production
+      CMS_DATABASE_HOST: 127.0.0.1
 
     defaults:
       run:
@@ -88,6 +91,9 @@ jobs:
     needs: changes
     if: needs.changes.outputs.cms == 'true'
     runs-on: ubuntu-latest
+    env:
+      CMS_DATABASE_NAME: cms_production
+      CMS_DATABASE_HOST: 127.0.0.1
 
     defaults:
       run:
@@ -111,6 +117,9 @@ jobs:
     needs: changes
     if: needs.changes.outputs.cms == 'true'
     runs-on: ubuntu-latest
+    env:
+      CMS_DATABASE_NAME: cms_production
+      CMS_DATABASE_HOST: 127.0.0.1
 
     defaults:
       run:
@@ -168,6 +177,8 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          CMS_DATABASE_NAME: cms_production
+          CMS_DATABASE_HOST: 127.0.0.1
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:prepare && bin/rails test:system
 
@@ -217,6 +228,8 @@ jobs:
         working-directory: astro
     env:
       PUBLIC_CMS_URL: http://localhost:3000
+      CMS_DATABASE_NAME: cms_production
+      CMS_DATABASE_HOST: 127.0.0.1
     services:
       postgres:
         image: postgres

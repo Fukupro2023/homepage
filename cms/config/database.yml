@@ -15,7 +15,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  gssencmode: disable
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -27,6 +26,8 @@ development:
   host: <%= ENV.fetch("CMS_DATABASE_HOST", "127.0.0.1") %>
   username: <%= ENV.fetch("CMS_DATABASE_USER", "cms") %>
   password: <%= ENV.fetch("CMS_DATABASE_PASSWORD", "password") %>
+  # ローカル/開発では GSSAPI を無効化（環境変数で上書き可能）
+  gssencmode: <%= ENV.fetch("PGSSENCMODE", "disable") %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -37,6 +38,8 @@ test:
   host: <%= ENV.fetch("CMS_DATABASE_HOST", "127.0.0.1") %>
   username: <%= ENV.fetch("CMS_DATABASE_USER", "cms") %>
   password: <%= ENV.fetch("CMS_DATABASE_PASSWORD", "password") %>
+  # テストでは GSSAPI を無効化（環境変数で上書き可能）
+  gssencmode: <%= ENV.fetch("PGSSENCMODE", "disable") %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -61,19 +64,21 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <%= ENV.fetch("CMS_DATABASE_NAME", "cms_production") %>
-    host: <%= ENV.fetch("CMS_DATABASE_HOST", "127.0.0.1") %>
+    database: <%= ENV.fetch("CMS_DATABASE_NAME") %>
+    host: <%= ENV.fetch("CMS_DATABASE_HOST") %>
     username: cms
     password: <%= ENV["CMS_DATABASE_PASSWORD"] %>
+    # 本番では TLS を強制（verify-full でサーバ証明書検証する場合は ENV で上書き可能）
+    sslmode: <%= ENV.fetch("PGSSLMODE", "require") %>
   cache:
     <<: *primary_production
-    database: <%= ENV.fetch("CMS_DATABASE_NAME", "cms_production") %>_cache
+    database: <%= ENV.fetch("CMS_DATABASE_NAME") %>_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: <%= ENV.fetch("CMS_DATABASE_NAME", "cms_production") %>_queue
+    database: <%= ENV.fetch("CMS_DATABASE_NAME") %>_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: <%= ENV.fetch("CMS_DATABASE_NAME", "cms_production") %>_cable
+    database: <%= ENV.fetch("CMS_DATABASE_NAME") %>_cable
     migrations_paths: db/cable_migrate
