@@ -1,0 +1,26 @@
+one:
+  title: テスト記事1
+  content: テスト本文1です。これはテスト用の記事です。
+  description: テスト概要1
+  author: テスト著者
+  published_at: <%= 1.day.ago.iso8601 %>
+  created_at: <%= 2.days.ago.iso8601 %>
+  updated_at: <%= 1.day.ago.iso8601 %>
+
+two:
+  title: テスト記事2
+  content: テスト本文2です。Railsについての記事です。
+  description: テスト概要2
+  author: 別の著者
+  published_at: <%= 2.days.ago.iso8601 %>
+  created_at: <%= 3.days.ago.iso8601 %>
+  updated_at: <%= 2.days.ago.iso8601 %>
+
+future:
+  title: 未来の記事
+  content: まだ公開されていない記事です。
+  description: 未公開の概要
+  author: テスト著者
+  published_at: <%= 1.day.from_now.iso8601 %>
+  created_at: <%= 1.day.ago.iso8601 %>
+  updated_at: <%= 1.day.ago.iso8601 %>
