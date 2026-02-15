@@ -6,5 +6,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [ :get, :options ],
       credentials: false
+
+    resource "/rails/active_storage/*",
+      headers: :any,
+      methods: [ :get, :options ],
+      credentials: false
   end
 end

@@ -39,7 +39,10 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "example.com" }
 
-  # Print deprecation notices to the stderr.
+  # Set host for url_helpers (e.g. rails_blob_url) to generate absolute URLs.
+  Rails.application.routes.default_url_options = { host: "example.com" }
+
+  # Print deprecation notices. to the stderr.
   config.active_support.deprecation = :stderr
 
   # Raises error for missing translations.
