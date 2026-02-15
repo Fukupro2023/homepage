@@ -72,8 +72,8 @@ resource "sakuracloud_packet_filter_rules" "rails" {
 # サーバーの定義
 resource "sakuracloud_server" "rails_app" {
   name   = "rails-server"
-  core   = 4
-  memory = 8
+  core   = 2
+  memory = 2
   disks  = [sakuracloud_disk.boot.id]
 
   network_interface {
