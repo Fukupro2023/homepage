@@ -13,7 +13,7 @@ const { src, title } = Astro.props as Props;
 
 {
 	(
-		<Image
+		<img
 			src={src ?? PATH.IMAGES("default-thumbnail.jpg")}
 			alt={`${title}のサムネイル`}
 			width={720}
