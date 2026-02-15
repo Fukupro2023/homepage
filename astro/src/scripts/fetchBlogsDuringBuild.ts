@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 interface Blog {
-	id: number;
+	id: string;
 	title: string;
 	description: string;
 	content: string;
