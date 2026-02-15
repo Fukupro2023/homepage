@@ -6,8 +6,9 @@ on:
     paths:
       - 'astro/**'
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 18 * * *'
+  schedule:
+    # 毎日 午前3:00 JST（UTC 18:00）
+    - cron: '0 18 * * *'
 
 permissions:
   contents: read
