@@ -11,6 +11,7 @@ module Api
 
     def search
       blogs = filter_by_published_at(Blog.includes(:tags, header_image_attachment: :blob).order(published_at: :desc))
+      blogs = exclude_created_today(blogs)
 
       if params[:q].present?
         params[:q].split.first(MAX_SEARCH_TERMS).each do |term|
@@ -32,6 +33,10 @@ module Api
 
     def filter_by_published_at(scope)
       scope.where("published_at <= ?", Time.zone.now)
+    end
+
+    def exclude_created_today(scope)
+      scope.where("created_at < ?", Time.zone.now.beginning_of_day)
     end
 
     def paginate(scope)
