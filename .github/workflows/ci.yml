@@ -2,17 +2,7 @@ name: CI
 
 on:
   pull_request:
-    paths:
-      - 'cms/**'
-      - 'astro/**'
-      - 'terraform/**'
-      - '.github/workflows/ci.yml'
   push:
-    paths:
-      - 'cms/**'
-      - 'astro/**'
-      - 'terraform/**'
-      - '.github/workflows/ci.yml'
   workflow_dispatch:
 
 jobs:
