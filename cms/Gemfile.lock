@@ -414,19 +414,19 @@ DEPENDENCIES
   brakeman
   capybara
   debug
-  foreman
-  image_processing (~> 1.2)
+  foreman (~> 0.89)
+  image_processing (~> 1.14)
   importmap-rails
   jbuilder
   kamal
-  nokogiri
+  nokogiri (~> 1.16)
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)
-  rack-cors
+  rack-cors (>= 2.0.2)
   rails (~> 8.1.2)
-  redcarpet
-  rouge
+  redcarpet (~> 3.6.1)
+  rouge (~> 4.5)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
