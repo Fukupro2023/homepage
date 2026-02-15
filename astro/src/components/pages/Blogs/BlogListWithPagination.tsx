@@ -27,7 +27,7 @@ export default function BlogListWithPagination({
 			) : blogs.length === 0 ? (
 				<NoDataView />
 			) : (
-				<div className="grid grid-cols-1 gap-4 py-3 md:grid-cols-3">
+				<div className="grid sm:grid-cols-3 grid-cols-1 gap-4">
 					{blogs.map((blog: BlogItem) => (
 						<BlogCard key={blog.id} blog={blog} />
 					))}
