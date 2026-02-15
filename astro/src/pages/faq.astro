@@ -1,6 +1,5 @@
 ---
 import FaqPage from "@/components/pages/faq/FaqPage.astro";
-import { PATH } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
 ---
 
@@ -8,7 +7,7 @@ import Layout from "@/layouts/Layout.astro";
   title="よくある質問 | 福プロ"
   description="福プロ（福山大学学友会プログラミングサークル）のよくある質問ページです。"
   author="福プロ"
-  thumbnail={PATH.IMAGES("favicon.svg")}
+  thumbnail="/favicon.svg"
   tags={["よくある質問", "Q&A"]}
 >
   <FaqPage />
