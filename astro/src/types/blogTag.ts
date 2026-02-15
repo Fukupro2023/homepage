@@ -10,7 +10,7 @@ export type BlogItem = {
 	content: string;
 	description?: string;
 	author: string;
-	thumbnail?: string;
+	header_image_url?: string;
 	published_at: string;
 	tags: string[];
 };

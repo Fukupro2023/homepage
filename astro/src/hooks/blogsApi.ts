@@ -38,7 +38,7 @@ export type SearchPost = {
 	author: string;
 	published_at: string;
 	tags: string[];
-	thumbnail: string;
+	header_image_url: string;
 };
 
 export type SearchApiResponse = {
@@ -68,7 +68,7 @@ function transformApiResponseToBlogItem(
 		content: post.content || post.description || "",
 		description: post.description ?? post.content,
 		author: post.author,
-		thumbnail: post.thumbnail ?? undefined,
+		header_image_url: post.header_image_url ?? undefined,
 		published_at: post.published_at,
 		tags: post.tags,
 	};

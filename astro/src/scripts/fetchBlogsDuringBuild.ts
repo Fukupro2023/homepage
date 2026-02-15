@@ -12,7 +12,7 @@ interface Blog {
 	author: string;
 	published_at: string;
 	tags: string[];
-	thumbnail: string;
+	header_image_url: string;
 	created_at: string;
 	updated_at: string;
 }
@@ -40,7 +40,7 @@ function toFrontmatter(blog: Blog): string {
 	const description = blog.description ?? "";
 	const publishedAt = blog.published_at;
 	const tags = Array.isArray(blog.tags) ? blog.tags : [];
-	const thumbnail = blog.thumbnail ?? "";
+	const headerImageUrl = blog.header_image_url ?? "";
 	const lines = [
 		"---",
 		`title: ${escapeYamlString(title)}`,
@@ -49,7 +49,7 @@ function toFrontmatter(blog: Blog): string {
 		`published_at: ${escapeYamlString(publishedAt)}`,
 		"tags:",
 		...tags.map((t) => `  - ${escapeYamlString(t)}`),
-		`thumbnail: ${escapeYamlString(thumbnail)}`,
+		`header_image_url: ${escapeYamlString(headerImageUrl)}`,
 		"",
 		"---",
 		"",

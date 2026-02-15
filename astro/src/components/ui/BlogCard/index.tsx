@@ -12,7 +12,7 @@ export default function BlogCard({ blog }: Props) {
 	return (
 		<div className={blogCardStyles.container}>
 			<img
-				src={blog.thumbnail ?? PATH.IMAGES("default-thumbnail.jpg")}
+				src={blog.header_image_url ?? PATH.IMAGES("default-thumbnail.jpg")}
 				alt={blog.title}
 				className={blogCardStyles.thumbnail}
 			/>
