@@ -27,5 +27,5 @@ export default defineConfig({
 		domains: imageDomains,
 	},
   site: 'https://fukupro2023.github.io',
-	base: '/homepage',
+	base: '/',
 });
