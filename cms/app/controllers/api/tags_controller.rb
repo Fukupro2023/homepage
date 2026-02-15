@@ -5,6 +5,7 @@ module Api
                         .left_joins(:blogs)
                         .group("tags.id", "tags.name")
                         .select("tags.id, tags.name, COUNT(blogs.id) AS blogs_count")
+                        .having("COUNT(blogs.id) > 0")
                         .order("blogs_count DESC")
 
       sorted_tags = tags_with_count.map do |tag|
