@@ -8,7 +8,7 @@ import type { BlogItem } from "@/types";
 type MarkdownModule = MarkdownInstance<{
 	title: string;
 	description?: string;
-	thumbnail?: string;
+	header_image_url?: string;
 	tags: string[];
 	author: string;
 	published_at: string;
@@ -52,7 +52,7 @@ const blog: BlogItem = {
 	id: blog_id,
 	title: frontmatter.title,
 	description: frontmatter.description ?? "",
-	thumbnail: frontmatter.thumbnail,
+	header_image_url: frontmatter.header_image_url,
 	tags: frontmatter.tags,
 	content: rawContent,
 	author: frontmatter.author,
@@ -64,7 +64,7 @@ const blog: BlogItem = {
   title={`${frontmatter.title} | 福プロ`}
   description={frontmatter.description ?? "福プロ（福山大学学友会プログラミングサークル）の記事です。"}
   author={frontmatter.author ?? "福プロ"}
-  thumbnail={frontmatter.thumbnail ?? PATH.IMAGES("default-thumbnail.jpg")}
+  thumbnail={frontmatter.header_image_url ?? PATH.IMAGES("default-thumbnail.jpg")}
   tags={frontmatter.tags}
 >
   <BlogArticle blog={blog} />
