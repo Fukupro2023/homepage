@@ -13,7 +13,7 @@ export const PATH = {
 		GITHUB: "https://github.com/Fukupro2023",
 		X: "https://x.com/fukupro2023",
 	},
-	IMAGES: (path: string) => `//images/${path}`,
+	IMAGES: (path: string) => `/images/${path}`,
 	CMS: {
 		BLOGS: `${import.meta.env.PUBLIC_CMS_URL}/api/blogs`,
 		SEARCH: `${import.meta.env.PUBLIC_CMS_URL}/api/blogs/search`,
