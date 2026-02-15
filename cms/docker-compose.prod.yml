@@ -8,14 +8,17 @@ services:
     env_file:
       - .env.production
     environment:
-      POSTGRES_USER: cms
+      POSTGRES_DB: ${CMS_DATABASE_NAME:-cms_production}
+      POSTGRES_USER: ${CMS_DATABASE_USER:-cms}
       POSTGRES_PASSWORD: ${CMS_DATABASE_PASSWORD}
-      POSTGRES_DB: cms_production
+      CMS_DATABASE_NAME: ${CMS_DATABASE_NAME:-cms_production}
+      CMS_DATABASE_HOST: ${CMS_DATABASE_HOST:-db}
+      CMS_DATABASE_USER: ${CMS_DATABASE_USER:-cms}
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cms -d cms_production"]
+      test: ["CMD-SHELL", "pg_isready --dbname=$$CMS_DATABASE_NAME --host=$$CMS_DATABASE_HOST --username=$$CMS_DATABASE_USER"]
       interval: 5s
       timeout: 10s
       retries: 24
