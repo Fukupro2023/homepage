@@ -9,6 +9,8 @@ on:
     paths:
       - 'cms/**'
       - 'astro/**'
+      - 'terraform/**'
+  workflow_dispatch:
 
 jobs:
   changes:
@@ -16,6 +18,7 @@ jobs:
     outputs:
       cms: ${{ steps.filter.outputs.cms }}
       astro: ${{ steps.filter.outputs.astro }}
+      terraform: ${{ steps.filter.outputs.terraform }}
     steps:
       - uses: actions/checkout@v6
       - uses: dorny/paths-filter@v3
@@ -26,6 +29,8 @@ jobs:
               - 'cms/**'
             astro:
               - 'astro/**'
+            terraform:
+              - 'terraform/**'
 
   scan_ruby:
     needs: changes
