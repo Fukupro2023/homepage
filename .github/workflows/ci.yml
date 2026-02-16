@@ -163,14 +163,21 @@ jobs:
           bundler-cache: true
           working-directory: cms
 
+      - name: Run unit tests
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+          CMS_DATABASE_NAME: cms_production
+          CMS_DATABASE_HOST: 127.0.0.1
+        run: bin/rails db:prepare && bin/rails test
+
       - name: Run system tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           CMS_DATABASE_NAME: cms_production
           CMS_DATABASE_HOST: 127.0.0.1
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:prepare && bin/rails test:system
+        run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v6
