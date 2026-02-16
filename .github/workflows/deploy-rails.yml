@@ -80,7 +80,7 @@ jobs:
             ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "ubuntu@$DEPLOY_HOST" "$@"
           }
           for i in $(seq 1 30); do
-            if ssh_cmd "if command -v curl > /dev/null; then curl -sf $HEALTH_CHECK_URL > /dev/null; else wget --spider -q $HEALTH_CHECK_URL; fi"; then
+            if ssh_cmd "if command -v curl > /dev/null; then curl -sf --connect-timeout 5 --max-time 10 $HEALTH_CHECK_URL > /dev/null; else wget --spider -q --timeout=10 $HEALTH_CHECK_URL; fi"; then
               echo "Health check passed"
               exit 0
             fi
