@@ -70,3 +70,18 @@ jobs:
             done
             sudo docker compose -f docker-compose.prod.yml --env-file .env.production up -d
           '
+
+      - name: Health check
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          for i in $(seq 1 30); do
+            if ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new ubuntu@$DEPLOY_HOST "curl -sf http://localhost:3000/api/blogs > /dev/null 2>&1"; then
+              echo "Health check passed"
+              exit 0
+            fi
+            echo "Waiting for app to respond... ($i/30)"
+            sleep 5
+          done
+          echo "Health check failed"
+          exit 1
