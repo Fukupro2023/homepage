@@ -171,13 +171,13 @@ jobs:
       - name: Run unit tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432
+          DATABASE_URL: postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/cms_test
         run: bin/rails db:prepare && bin/rails test
 
       - name: Run system tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432
+          DATABASE_URL: postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/cms_test
         run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
