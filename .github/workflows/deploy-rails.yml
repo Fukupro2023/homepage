@@ -74,12 +74,13 @@ jobs:
       - name: Health check
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          HEALTH_CHECK_URL: ${{ secrets.HEALTH_CHECK_URL || 'http://localhost:3000/up' }}
         run: |
           ssh_cmd() {
             ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "ubuntu@$DEPLOY_HOST" "$@"
           }
           for i in $(seq 1 30); do
-            if ssh_cmd "if command -v curl > /dev/null; then curl -sf http://localhost:3000/api/blogs > /dev/null; else wget --spider -q http://localhost:3000/api/blogs; fi"; then
+            if ssh_cmd "if command -v curl > /dev/null; then curl -sf $HEALTH_CHECK_URL > /dev/null; else wget --spider -q $HEALTH_CHECK_URL; fi"; then
               echo "Health check passed"
               exit 0
             fi
