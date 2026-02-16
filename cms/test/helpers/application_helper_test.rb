@@ -33,8 +33,8 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "markdown should render strikethrough" do
-    result = markdown("~~削除~~")
-    assert_includes result, "<del>削除</del>"
+    result = markdown("~~取り消し線~~")
+    assert_includes result, "<del>取り消し線</del>"
   end
 
   # ===== page_numbers_for =====
