@@ -1,41 +1,97 @@
-<h1><%= @blog.title %></h1>
+<div class="min-h-screen bg-gray-50">
+  <%# ===== Flash ===== %>
+  <% if notice.present? %>
+    <div class="mx-auto mt-4 max-w-3xl px-6">
+      <div class="rounded-lg bg-green-50 border border-green-200 px-5 py-4 text-green-700">
+        <%= notice %>
+      </div>
+    </div>
+  <% end %>
 
-<% if notice.present? %>
-  <p style="color: green;"><%= notice %></p>
-<% end %>
+  <%# ===== Article Card ===== %>
+  <div class="mx-auto max-w-3xl px-6 py-8">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
 
-<dl>
-  <dt>著者</dt>
-  <dd><%= @blog.author %></dd>
+      <%# ===== Navigation + Actions ===== %>
+      <div class="flex items-center justify-between px-6 py-3 border-b border-gray-200">
+        <div class="flex items-center gap-4 text-sm">
+          <%= link_to admin_blogs_path, class: "flex items-center gap-1 text-gray-500 hover:text-gray-800 transition-colors" do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            一覧に戻る
+          <% end %>
+        </div>
+        <div class="flex items-center gap-3">
+          <%= link_to edit_admin_blog_path(@blog),
+                class: "inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-md transition-colors" do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            編集
+          <% end %>
+          <%= link_to admin_blog_path(@blog),
+                data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                class: "inline-flex items-center gap-1.5 px-4 py-1.5 bg-white border border-red-300 text-red-600 hover:bg-red-50 text-sm font-medium rounded-md transition-colors" do %>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            削除
+          <% end %>
+        </div>
+      </div>
 
-  <dt>概要</dt>
-  <dd><%= @blog.description %></dd>
+      <%# ===== Header Image ===== %>
+      <% if @blog.header_image.attached? %>
+        <div class="w-full max-h-48 overflow-hidden">
+          <%= image_tag @blog.header_image, alt: @blog.title, class: "w-full h-48 object-cover" %>
+        </div>
+      <% end %>
 
-  <dt>本文</dt>
-  <dd><%= markdown(@blog.content) %></dd>
+      <%# ===== Article Header ===== %>
+      <div class="px-8 pt-6 pb-4 border-b border-gray-100">
+        <h1 class="text-2xl font-bold text-gray-800 mb-3">
+          <span class="text-blue-500 mr-1">#</span><%= @blog.title %>
+        </h1>
 
-  <dt>タグ</dt>
-  <dd><%= @blog.tags.map(&:name).join(", ") %></dd>
+        <%# Meta info %>
+        <div class="flex items-center justify-between text-sm text-gray-500 mb-3">
+          <span><%= @blog.published_at&.strftime("%Y-%m-%d") || "未公開" %></span>
+          <span><%= @blog.author %></span>
+        </div>
 
-  <dt>ヘッダー画像</dt>
-  <dd>
-    <% if @blog.header_image.attached? %>
-      <%= image_tag @blog.header_image, style: "max-width: 400px;" %>
-    <% else %>
-      なし
-    <% end %>
-  </dd>
+        <%# Description %>
+        <% if @blog.description.present? %>
+          <p class="text-gray-600 text-sm leading-relaxed mb-3"><%= @blog.description %></p>
+        <% end %>
 
-  <dt>公開日</dt>
-  <dd><%= @blog.published_at&.strftime("%Y-%m-%d %H:%M") || "未設定" %></dd>
+        <%# Tags %>
+        <% if @blog.tags.any? %>
+          <div class="flex flex-wrap gap-2">
+            <% @blog.tags.each do |tag| %>
+              <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-500">
+                <span class="text-gray-400 mr-0.5">#</span><%= tag.name %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
 
-  <dt>作成日</dt>
-  <dd><%= @blog.created_at.strftime("%Y-%m-%d %H:%M") %></dd>
+      <%# ===== Content ===== %>
+      <div class="px-8 py-6">
+        <div class="markdown-body prose prose-gray max-w-none leading-relaxed">
+          <%= markdown(@blog.content) %>
+        </div>
+      </div>
 
-  <dt>更新日</dt>
-  <dd><%= @blog.updated_at.strftime("%Y-%m-%d %H:%M") %></dd>
-</dl>
+      <%# ===== Footer Meta ===== %>
+      <div class="px-8 py-4 bg-gray-50 border-t border-gray-200 text-xs text-gray-400">
+        <div class="flex items-center gap-6">
+          <span>作成: <%= @blog.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+          <span>更新: <%= @blog.updated_at.strftime("%Y-%m-%d %H:%M") %></span>
+        </div>
+      </div>
 
-<%= link_to "編集", edit_admin_blog_path(@blog) %>
-<%= link_to "削除", admin_blog_path(@blog), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
-<%= link_to "一覧に戻る", admin_blogs_path %>
+    </div>
+  </div>
+</div>
