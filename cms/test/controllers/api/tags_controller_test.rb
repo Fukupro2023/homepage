@@ -41,4 +41,15 @@ class Api::TagsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal json["tags"].length, json["count"]
   end
+
+  test "index should return blog counts matching actual associations" do
+    get api_tags_url, as: :json
+    json = JSON.parse(response.body)
+
+    json["tags"].each do |tag_data|
+      tag = Tag.find_by(name: tag_data["name"])
+      assert_equal tag.blogs.count, tag_data["count"],
+        "Tag '#{tag_data["name"]}' の記事数が実際の関連数と一致しません"
+    end
+  end
 end
