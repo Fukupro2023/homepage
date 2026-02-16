@@ -15,10 +15,15 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_includes result, "<strong>太字</strong>"
   end
 
-  test "markdown should render links" do
+  test "markdown should render markdown link syntax" do
+    result = markdown("[サイト](https://example.com)")
+    assert_includes result, '<a href="https://example.com"'
+    assert_includes result, "サイト"
+  end
+
+  test "markdown should autolink bare URLs" do
     result = markdown("https://example.com")
-    assert_includes result, "<a"
-    assert_includes result, "https://example.com"
+    assert_includes result, '<a href="https://example.com"'
   end
 
   test "markdown should render fenced code blocks" do
