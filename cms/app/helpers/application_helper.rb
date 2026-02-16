@@ -1,13 +1,25 @@
 module ApplicationHelper
   # リンクを新しいタブで開くカスタムレンダラー
   class ExternalLinkRenderer < Redcarpet::Render::HTML
+    include ERB::Util
+
     def link(link, title, content)
-      title_attr = title ? %( title="#{title}") : ""
-      %(<a href="#{link}"#{title_attr} target="_blank" rel="noopener noreferrer">#{content}</a>)
+      return html_escape(content) unless safe_url?(link)
+
+      href = html_escape(link)
+      title_attr = title ? %( title="#{html_escape(title)}") : ""
+      %(<a href="#{href}"#{title_attr} target="_blank" rel="noopener noreferrer">#{content}</a>)
     end
 
-    def autolink(link, link_type)
-      %(<a href="#{link}" target="_blank" rel="noopener noreferrer">#{link}</a>)
+    def autolink(link, _link_type)
+      escaped = html_escape(link)
+      %(<a href="#{escaped}" target="_blank" rel="noopener noreferrer">#{escaped}</a>)
+    end
+
+    private
+
+    def safe_url?(url)
+      url.match?(%r{\Ahttps?://}i) || url.start_with?("/", "#")
     end
   end
 
