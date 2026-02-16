@@ -127,4 +127,39 @@ class Api::BlogsControllerTest < ActionDispatch::IntegrationTest
     ids = json["data"].map { |b| b["id"] }
     assert_not_includes ids, @future_blog.id
   end
+
+  # ===== 複合検索 =====
+  test "search should filter by tag and keyword combined" do
+    get search_api_blogs_url, params: { q: "tag:Rails テスト記事1" }, as: :json
+    json = JSON.parse(response.body)
+
+    ids = json["data"].map { |b| b["id"] }
+    assert_includes ids, @blog.id
+    assert_not_includes ids, @blog_two.id
+  end
+
+  test "search should filter by author and tag combined" do
+    get search_api_blogs_url, params: { q: "author:テスト著者 tag:Rails" }, as: :json
+    json = JSON.parse(response.body)
+
+    ids = json["data"].map { |b| b["id"] }
+    assert_includes ids, @blog.id
+    assert_not_includes ids, @blog_two.id
+  end
+
+  test "search should return empty when compound conditions contradict" do
+    get search_api_blogs_url, params: { q: "tag:JavaScript author:テスト著者" }, as: :json
+    json = JSON.parse(response.body)
+
+    assert_empty json["data"]
+  end
+
+  test "search should filter by multiple keywords" do
+    get search_api_blogs_url, params: { q: "テスト記事1 テスト本文1" }, as: :json
+    json = JSON.parse(response.body)
+
+    ids = json["data"].map { |b| b["id"] }
+    assert_includes ids, @blog.id
+    assert_not_includes ids, @blog_two.id
+  end
 end
