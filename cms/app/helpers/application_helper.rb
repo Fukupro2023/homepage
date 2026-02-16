@@ -1,8 +1,20 @@
 module ApplicationHelper
+  # リンクを新しいタブで開くカスタムレンダラー
+  class ExternalLinkRenderer < Redcarpet::Render::HTML
+    def link(link, title, content)
+      title_attr = title ? %( title="#{title}") : ""
+      %(<a href="#{link}"#{title_attr} target="_blank" rel="noopener noreferrer">#{content}</a>)
+    end
+
+    def autolink(link, link_type)
+      %(<a href="#{link}" target="_blank" rel="noopener noreferrer">#{link}</a>)
+    end
+  end
+
   def markdown(text)
     return "" if text.blank?
 
-    renderer = Redcarpet::Render::HTML.new(
+    renderer = ExternalLinkRenderer.new(
       hard_wrap: true,
       filter_html: false
     )
