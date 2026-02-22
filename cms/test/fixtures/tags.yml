@@ -1,0 +1,8 @@
+rails:
+  name: Rails
+
+ruby:
+  name: Ruby
+
+javascript:
+  name: JavaScript

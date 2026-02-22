@@ -32,11 +32,11 @@ module Api
     private
 
     def filter_by_published_at(scope)
-      scope.where("published_at <= ?", Time.zone.now)
+      scope.where("blogs.published_at <= ?", Time.zone.now)
     end
 
     def exclude_created_today(scope)
-      scope.where("created_at < ?", Time.zone.now.beginning_of_day)
+      scope.where("blogs.created_at < ?", Time.zone.now.beginning_of_day)
     end
 
     def paginate(scope)

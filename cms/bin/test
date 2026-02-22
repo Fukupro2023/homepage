@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -e
+
+echo "=== テスト用データベースを準備中... ==="
+bin/rails db:test:prepare
+
+echo "=== テスト実行中... ==="
+exec bin/rails test "$@"
