@@ -6,8 +6,8 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
 
     # Basic認証の認証情報を設定
     @auth_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(
-      ENV.fetch("ADMIN_USER", "admin"),
-      ENV.fetch("ADMIN_PASSWORD", "password")
+      ENV.fetch("BASIC_AUTH_USER", "admin"),
+      ENV.fetch("BASIC_AUTH_PASSWORD", "password")
     )
   end
 
@@ -44,7 +44,7 @@ class Admin::BlogsControllerTest < ActionDispatch::IntegrationTest
         },
         headers: { "Authorization" => @auth_credentials }
     end
-    assert_redirected_to admin_blog_url(Blog.last)
+    assert_redirected_to admin_blog_url(Blog.order(created_at: :desc).first)
   end
 
   # ===== edit =====

@@ -1,0 +1,11 @@
+one_rails:
+  blog: one
+  tag: rails
+
+one_ruby:
+  blog: one
+  tag: ruby
+
+two_javascript:
+  blog: two
+  tag: javascript
