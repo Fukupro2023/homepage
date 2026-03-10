@@ -13,7 +13,7 @@
 		"fetch:blogs": "tsx --env-file .env src/scripts/fetchBlogsDuringBuild.ts"
 	},
 	"dependencies": {
-		"@astrojs/preact": "^4.1.3",
+		"@astrojs/preact": "^5.0.0",
 		"@iconify-json/ri": "^1.2.10",
 		"@iconify/react": "^6.0.2",
 		"@splidejs/splide": "^4.1.4",
