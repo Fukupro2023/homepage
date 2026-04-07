@@ -23,7 +23,7 @@
 		"highlight.js": "^11.11.1",
 		"katex": "^0.16.38",
 		"marked": "^17.0.4",
-		"marked-highlight": "^2.2.3",
+		"marked-highlight": "^2.2.4",
 		"preact": "^10.28.4",
 		"sharp": "^0.34.5",
 		"swr": "^2.4.1",
